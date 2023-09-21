@@ -1,0 +1,23 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_admin_dashboard/Global/Widgets/cards/white_card.dart';
+import 'package:flutter_admin_dashboard/Global/Widgets/labels/custom_labels.dart';
+
+class BlankView extends StatelessWidget {
+  const BlankView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: ListView(
+        physics: const ClampingScrollPhysics(),
+        children: [Text('Blank View', style: CustomLabels.h1),
+        
+        const SizedBox(height: 30),
+        
+        const WhiteCard(title: 'This is a Blank View',
+        child: Text('Hello World'))
+        ],
+      ),
+    );
+  }
+}
