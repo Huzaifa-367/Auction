@@ -28,7 +28,11 @@ class _SlideCountDownWidgetState extends State<SlideCountDownWidget> {
     bidderProvider = context.read<BidderProvider>();
     return Row(
       children: [
-        loggedinuser!.userType == "admin" && !isStarted
+        loggedinuser!.userType == "admin" &&
+                ((Duration(minutes: widget.product.auctionTime) -
+                            Duration(seconds: bidderProvider.startedTime ?? 0))
+                        .inSeconds >
+                    0)
             ? ButtonWidget(
                 btnText: "Start",
                 onPress: () async {
@@ -39,59 +43,63 @@ class _SlideCountDownWidgetState extends State<SlideCountDownWidget> {
                   //bidderProvider.getAuctionDetail();
                 })
             : const SizedBox.shrink(),
-        context.watch<BidderProvider>().productId == widget.product.id ||
-                isStarted
-            ? Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8.0,
-                ),
-                child: SlideCountdownSeparated(
-                  onDone: () {
-                    try {
-                      String status = 'UnSold';
-                      if (bidderProvider.bidders.isNotEmpty) {
-                        saleToBidder(
-                            bidderId: bidderProvider.bidders[0].id,
-                            productId: widget.product.id);
-                        if (bidderProvider.timer != null) {
-                          bidderProvider.timer!.cancel();
-                        }
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 8.0,
+          ),
+          child: SlideCountdownSeparated(
+            onDone: () {
+              try {
+                String status = 'UnSold';
+                if (bidderProvider.bidders.isNotEmpty) {
+                  saleToBidder(
+                      bidderId: bidderProvider.bidders[0].id,
+                      productId: widget.product.id);
+                  if (bidderProvider.timer != null) {
+                    bidderProvider.timer!.cancel();
+                  }
 
-                        status = 'Sold';
-                        // EasyLoading.showToast(
-                        //   'Sold to ${bidderProvider.bidders[0].user_Name}',
-                        // );
-                        snackBar(
-                          context,
-                          'Sold to ${bidderProvider.bidders[0].user_Name}',
-                        );
-                      }
-                      productprovider.updateType(
-                        type: status,
-                        pid: widget.product.id,
-                      );
-                    } catch (e) {
-                      String error = e.toString();
-                      //print(e);
-                    }
-                    isStarted = false;
-                  },
-                  duration: Duration(
-                      minutes: isStarted
-                          ? widget.product.auctionTime
-                          : bidderProvider.startedTime == null
-                              ? 0
-                              : (widget.product.auctionTime) -
-                                          (bidderProvider.startedTime!) <
-                                      widget.product.auctionTime
-                                  ? (widget.product.auctionTime) -
-                                      (bidderProvider.startedTime!)
-                                  : 0),
-                  separatorType: SeparatorType.symbol,
-                  slideDirection: SlideDirection.up,
-                ),
-              )
-            : const SizedBox.shrink()
+                  status = 'Sold';
+                  // EasyLoading.showToast(
+                  //   'Sold to ${bidderProvider.bidders[0].user_Name}',
+                  // );
+                  snackBar(
+                    context,
+                    'Sold to ${bidderProvider.bidders[0].user_Name}',
+                  );
+                }
+                productprovider.updateType(
+                  type: status,
+                  pid: widget.product.id,
+                );
+              } catch (e) {
+                String error = e.toString();
+                //print(e);
+              }
+              isStarted = false;
+            },
+            duration: Duration(minutes: widget.product.auctionTime) -
+                Duration(
+                    seconds: context.watch<BidderProvider>().startedTime ?? 0),
+
+            //  Duration(
+            //     seconds:
+
+            //     // minutes: isStarted
+            //     //     ? widget.product.auctionTime
+            //     //     : bidderProvider.startedTime == null
+            //     //         ? 0
+            //     //         : (widget.product.auctionTime) -
+            //     //                     (bidderProvider.startedTime!) <
+            //     //                 widget.product.auctionTime
+            //     //             ? (widget.product.auctionTime) -
+            //     //                 (bidderProvider.startedTime!)
+            //     //             : 0
+            //     ),
+            separatorType: SeparatorType.symbol,
+            slideDirection: SlideDirection.up,
+          ),
+        )
       ],
     );
   }

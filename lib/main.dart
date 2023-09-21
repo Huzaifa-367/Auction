@@ -97,32 +97,36 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return GetMaterialApp(
+        return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'OSA Auction',
-          initialRoute: loggedinuser!.userType != "tele"
-              ? Flurorouter.dashboardRoute
-              : Flurorouter
-                  .productsRoute, // Flurorouter.root o Flurorouter.login es lo mismo
-          onGenerateRoute: Flurorouter.router.generator,
-          navigatorKey: NavigationService.navigatorKey,
-          scaffoldMessengerKey: NotificationsService.messengerKey,
-          builder: (_, child) {
-            final authProvider = Provider.of<AuthProvider>(context);
-            if (authProvider.authStatus == AuthStatus.checking) {
-              return const SplashLayout();
-            }
-            if (authProvider.authStatus == AuthStatus.authenticated) {
-              return DashboardLayout(child: child!);
-            } else {
-              return AuthLayout(child: child!);
-            }
-          },
+          builder: EasyLoading.init(),
+          home: GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'OSA Auction',
+            initialRoute: loggedinuser!.userType != "tele"
+                ? Flurorouter.dashboardRoute
+                : Flurorouter
+                    .productsRoute, // Flurorouter.root o Flurorouter.login es lo mismo
+            onGenerateRoute: Flurorouter.router.generator,
+            navigatorKey: NavigationService.navigatorKey,
+            scaffoldMessengerKey: NotificationsService.messengerKey,
+            builder: (_, child) {
+              final authProvider = Provider.of<AuthProvider>(context);
+              if (authProvider.authStatus == AuthStatus.checking) {
+                return const SplashLayout();
+              }
+              if (authProvider.authStatus == AuthStatus.authenticated) {
+                return DashboardLayout(child: child!);
+              } else {
+                return AuthLayout(child: child!);
+              }
+            },
 
-          // manipulo el estilo del scrollbar
-          theme: ThemeData.light(useMaterial3: true).copyWith(
-            scrollbarTheme: ScrollbarThemeData(
-                thumbColor: MaterialStateProperty.all(Colors.grey[500])),
+            // manipulo el estilo del scrollbar
+            theme: ThemeData.light(useMaterial3: true).copyWith(
+              scrollbarTheme: ScrollbarThemeData(
+                  thumbColor: MaterialStateProperty.all(Colors.grey[500])),
+            ),
           ),
         );
       },

@@ -556,8 +556,8 @@ class _DashboardViewState extends State<DashboardView> {
                             final product =
                                 productprovider!.filteredProducts[index];
                             return (product.productType == "Auction" ||
-                                    product.productType == "Quick") &&
-                                        loggedinuser!.userType == "pres"
+                                        product.productType == "Quick") &&
+                                    loggedinuser!.userType == "pres"
                                 ? GestureDetector(
                                     onTap: () {
                                       Navigator.push(
@@ -897,7 +897,7 @@ class _DashboardViewState extends State<DashboardView> {
                                               loggedinuser!.userType == "admin"
                                                   ? Container(
                                                       margin: const EdgeInsets
-                                                              .symmetric(
+                                                          .symmetric(
                                                           horizontal: 12),
                                                       child: product.productType ==
                                                                   "Sold" ||
@@ -1049,11 +1049,8 @@ class _DashboardViewState extends State<DashboardView> {
                                                                         .userType !=
                                                                     "tele"
                                                             ? const Color
-                                                                    .fromARGB(
-                                                                146,
-                                                                187,
-                                                                250,
-                                                                246)
+                                                                .fromARGB(146,
+                                                                187, 250, 246)
                                                             : Colors.white,
                                                 borderRadius:
                                                     const BorderRadius.all(
@@ -1370,7 +1367,7 @@ class _DashboardViewState extends State<DashboardView> {
                                                       ? Container(
                                                           margin:
                                                               const EdgeInsets
-                                                                      .symmetric(
+                                                                  .symmetric(
                                                                   horizontal:
                                                                       12),
                                                           child: product.productType ==

@@ -30,10 +30,8 @@ class _PresenterViewState extends State<PresenterView> {
     super.initState();
 
     bidderProvider ??= context.read<BidderProvider>();
-    if (bidderProvider!.auctionTimer != null) {
-      bidderProvider!.auctionTimer!.cancel();
-    }
-    bidderProvider!.getAuction();
+
+    //bidderProvider!.getAuction();
     bidderProvider!.getBidders(widget.product.id);
   }
 

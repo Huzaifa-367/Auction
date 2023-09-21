@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_admin_dashboard/providers/BiddersProvider.dart';
 import 'package:flutter_admin_dashboard/providers/side_menu_provider.dart';
 import 'package:flutter_admin_dashboard/ui/shared/navbar.dart';
 import 'package:flutter_admin_dashboard/ui/shared/sidebar.dart';
+import 'package:provider/provider.dart';
 
 class DashboardLayout extends StatefulWidget {
   final Widget child;
@@ -17,6 +19,16 @@ class _DashboardLayoutState extends State<DashboardLayout>
   @override
   void initState() {
     super.initState();
+    //  yahan pr logic lgaon jis jis ko dashboard screen show hogi   true ki jgh
+    if (true) {
+      // context.read<BidderProvider>().getProducts();
+      // bidderProvider ??= context.read<BidderProvider>();
+      BidderProvider bidderProvider = context.read<BidderProvider>();
+      if (bidderProvider.auctionTimer != null) {
+        bidderProvider.auctionTimer!.cancel();
+      }
+      bidderProvider.getAuction();
+    }
     SideMenuProvider.menuController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300));
   }

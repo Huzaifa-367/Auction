@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_dashboard/api/ApiHandler.dart';
 import 'package:flutter_admin_dashboard/models/Bidder_Model.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../models/Product_Model.dart';
 
@@ -54,8 +55,9 @@ class BidderProvider extends ChangeNotifier {
         productId = idd;
         var d = DateTime.now()
             .difference(DateTime.parse(response.data['dateTime']));
-        startedTime = d.inMinutes;
-
+        startedTime = d.inSeconds;
+        // EasyLoading.showSuccess(
+        //     "'startedTime': $startedTime productId: $productId");
         notifyListeners();
       }
     } catch (e) {

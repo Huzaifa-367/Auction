@@ -1,0 +1,21 @@
+2023/09/21-09:57:27.511 ee0 Creating DB C:\Users\sheik\AppData\Local\Temp\flutter_tools.84f9487\flutter_tools_chrome_device.29353d76\Default\IndexedDB\http_localhost_57607.indexeddb.leveldb since it was missing.
+2023/09/21-09:57:27.526 ee0 Reusing MANIFEST C:\Users\sheik\AppData\Local\Temp\flutter_tools.84f9487\flutter_tools_chrome_device.29353d76\Default\IndexedDB\http_localhost_57607.indexeddb.leveldb/MANIFEST-000001
+2023/09/21-09:57:27.559 2bb4 Level-0 table #5: started
+2023/09/21-09:57:27.568 2bb4 Level-0 table #5: 690 bytes OK
+2023/09/21-09:57:27.577 2bb4 Delete type=0 #3
+2023/09/21-09:57:27.577 2bb4 Manual compaction at level-0 from '\x00\x01\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x02\x00\x00\x00' @ 0 : 0; will stop at (end)
+2023/09/21-10:06:47.441 3a24 Manual compaction at level-0 from '\x00\x04\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x05\x00\x00\x00' @ 0 : 0; will stop at (end)
+2023/09/21-10:10:23.440 2bb4 Level-0 table #7: started
+2023/09/21-10:10:23.447 2bb4 Level-0 table #7: 5357 bytes OK
+2023/09/21-10:10:23.453 2bb4 Delete type=0 #4
+2023/09/21-10:10:23.454 37d4 Manual compaction at level-0 from '\x00\x05\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x06\x00\x00\x00' @ 0 : 0; will stop at (end)
+2023/09/21-10:13:55.521 2bb4 Level-0 table #9: started
+2023/09/21-10:13:55.528 2bb4 Level-0 table #9: 1724 bytes OK
+2023/09/21-10:13:55.535 2bb4 Delete type=0 #6
+2023/09/21-10:13:55.535 37d4 Manual compaction at level-0 from '\x00\x06\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x07\x00\x00\x00' @ 0 : 0; will stop at '\x00\x06\x00\x00\x05' @ 240 : 1
+2023/09/21-10:13:55.535 37d4 Compacting 1@0 + 1@1 files
+2023/09/21-10:13:55.544 37d4 Generated table #10@0: 101 keys, 2272 bytes
+2023/09/21-10:13:55.544 37d4 Compacted 1@0 + 1@1 files => 2272 bytes
+2023/09/21-10:13:55.548 37d4 compacted to: files[ 0 1 1 0 0 0 0 ]
+2023/09/21-10:13:55.549 37d4 Delete type=2 #9
+2023/09/21-10:13:55.549 37d4 Manual compaction at level-0 from '\x00\x06\x00\x00\x05' @ 240 : 1 .. '\x00\x07\x00\x00\x00' @ 0 : 0; will stop at (end)

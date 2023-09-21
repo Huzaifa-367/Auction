@@ -37,11 +37,25 @@ class _DashboardViewState extends State<AllProductsView> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    productprovider ??= context.read<Productprovider>();
 
     bidderProvider ??= context.read<BidderProvider>();
+    doThis();
+  }
 
-    productprovider ??= context.read<Productprovider>();
-    productprovider!.getProducts();
+  doThis() async {
+    try {
+      await productprovider!.getProducts();
+
+      //  Yahan pr logic lgao jis ko srf product screen show hogi dashboard nhi hogi true ki jgh
+
+      if(true){
+      if (bidderProvider!.auctionTimer != null) {
+        bidderProvider!.auctionTimer!.cancel();
+      }
+      bidderProvider!.getAuction();
+      }
+    } catch (e) {}
   }
 
   final jobRoleCtrl = TextEditingController();
