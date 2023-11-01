@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_dashboard/Global/Global.dart';
+import 'package:flutter_admin_dashboard/Global/Widgets/Image_Slider/Image_Slider.dart';
 import 'package:flutter_admin_dashboard/Global/Widgets/cards/dol_durma_clipper.dart';
 import 'package:flutter_admin_dashboard/Global/Widgets/cards/white_card.dart';
 import 'package:flutter_admin_dashboard/models/Bidder_Model.dart';
@@ -188,19 +189,37 @@ class _PresenterViewState extends State<PresenterView> {
                                   BorderRadius.all(Radius.circular(24)),
                             ),
                             child: Center(
-                              child: FanCarouselImageSlider(
-                                initalPageIndex: 0,
-                                autoPlay: true,
-                                autoPlayInterval: const Duration(
-                                  seconds: 5,
-                                ),
-                                isClickable: false,
-                                sliderHeight:
-                                    MediaQuery.of(context).size.height * 0.7,
-                                imagesLink: widget.product.image_urls,
-                                userCanDrag: true,
-                                isAssets: false,
-                                imageFitMode: BoxFit.fill,
+                              child: Column(
+                                children: [
+                                  SizedBox(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.7,
+                                    child: ParallaxSwiper(
+                                      images: widget.product.image_urls,
+                                      dragToScroll: true,
+                                      viewPortFraction: 0.85,
+                                      padding: const EdgeInsets.all(16.0),
+                                      parallaxFactor: 10.0,
+                                      foregroundFadeEnabled: true,
+                                      backgroundZoomEnabled: true,
+                                    ),
+                                  ),
+                                  // FanCarouselImageSlider(
+                                  //   initalPageIndex: 0,
+                                  //   autoPlay: true,
+                                  //   autoPlayInterval: const Duration(
+                                  //     seconds: 5,
+                                  //   ),
+                                  //   isClickable: false,
+                                  //   sliderHeight:
+                                  //       MediaQuery.of(context).size.height *
+                                  //           0.7,
+                                  //   imagesLink: widget.product.image_urls,
+                                  //   userCanDrag: true,
+                                  //   isAssets: false,
+                                  //   imageFitMode: BoxFit.fill,
+                                  // ),
+                                ],
                               ),
                             ),
                           ),
