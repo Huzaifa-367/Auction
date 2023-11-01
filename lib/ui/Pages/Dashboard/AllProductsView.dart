@@ -243,7 +243,7 @@ class _DashboardViewState extends State<AllProductsView> {
                               return (product.productType == "Auction" ||
                                           product.productType == "Quick") &&
                                       loggedinuser!.userType == "tele"
-                                  ? !(loggedinuser!.userType != "tele" &&
+                                  ? (loggedinuser!.userType != "tele" &&
                                           context
                                                   .watch<BidderProvider>()
                                                   .productId ==
@@ -441,7 +441,8 @@ class _DashboardViewState extends State<AllProductsView> {
                                                                           // ignore: use_build_context_synchronously
                                                                           snackBar(
                                                                               context,
-                                                                              "Saved Successfully");
+                                                                              "Saved Successfully",
+                                                                              null);
                                                                           Navigator.of(context)
                                                                               .pop();
                                                                         },
@@ -967,7 +968,11 @@ class _DashboardViewState extends State<AllProductsView> {
                                                                                     );
 
                                                                                     // ignore: use_build_context_synchronously
-                                                                                    snackBar(context, "Saved Successfully");
+                                                                                    snackBar(
+                                                                                      context,
+                                                                                      "Saved Successfully",
+                                                                                      null,
+                                                                                    );
                                                                                     Navigator.of(context).pop();
                                                                                   },
                                                                                   child: Container(
@@ -1125,48 +1130,49 @@ class _DashboardViewState extends State<AllProductsView> {
                                                                     ),
                                                                   ),
                                                                 )
-                                                              : product.productType ==
-                                                                      "Sold"
-                                                                  ? Container(
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        color:
-                                                                            scfColor3,
-                                                                        borderRadius:
-                                                                            BorderRadius.circular(15),
-                                                                      ),
-                                                                      margin: const EdgeInsets
-                                                                          .symmetric(
-                                                                        vertical:
-                                                                            10,
-                                                                      ),
-                                                                      child:
-                                                                          Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.symmetric(
-                                                                          horizontal:
-                                                                              10.0,
-                                                                          vertical:
-                                                                              5,
-                                                                        ),
-                                                                        child:
-                                                                            Row(
-                                                                          children: [
-                                                                            TextWidget(
-                                                                              title: "Iten Sold At: £",
-                                                                              txtSize: 12,
-                                                                              txtColor: txtColor,
-                                                                            ),
-                                                                            TextWidget(
-                                                                              title: "3458",
-                                                                              txtSize: 12,
-                                                                              txtColor: txtColor.withOpacity(.8),
-                                                                            ),
-                                                                          ],
-                                                                        ),
-                                                                      ),
-                                                                    )
-                                                                  : const SizedBox(),
+                                                              // : product.productType ==
+                                                              //         "Sold"
+                                                              //     ? Container(
+                                                              //         decoration:
+                                                              //             BoxDecoration(
+                                                              //           color:
+                                                              //               scfColor3,
+                                                              //           borderRadius:
+                                                              //               BorderRadius.circular(15),
+                                                              //         ),
+                                                              //         margin: const EdgeInsets
+                                                              //             .symmetric(
+                                                              //           vertical:
+                                                              //               10,
+                                                              //         ),
+                                                              //         child:
+                                                              //             Padding(
+                                                              //           padding:
+                                                              //               const EdgeInsets.symmetric(
+                                                              //             horizontal:
+                                                              //                 10.0,
+                                                              //             vertical:
+                                                              //                 5,
+                                                              //           ),
+                                                              //           child:
+                                                              //               Row(
+                                                              //             children: [
+                                                              //               TextWidget(
+                                                              //                 title: "Iten Sold At: £",
+                                                              //                 txtSize: 12,
+                                                              //                 txtColor: txtColor,
+                                                              //               ),
+                                                              //               TextWidget(
+                                                              //                 title: "3458",
+                                                              //                 txtSize: 12,
+                                                              //                 txtColor: txtColor.withOpacity(.8),
+                                                              //               ),
+                                                              //             ],
+                                                              //           ),
+                                                              //         ),
+                                                              //       )
+
+                                                              : const SizedBox(),
                                                         ],
                                                       ),
                                                     ),

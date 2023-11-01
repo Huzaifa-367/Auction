@@ -1,26 +1,34 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_dashboard/api/ApiHandler.dart';
 import 'package:flutter_admin_dashboard/models/Bidder_Model.dart';
+<<<<<<< Updated upstream
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+=======
+import 'package:flutter_admin_dashboard/models/Heighest_Bidder_Model.dart';
+>>>>>>> Stashed changes
 
 import '../models/Product_Model.dart';
 
 class BidderProvider extends ChangeNotifier {
   List<Bidder> bidders = [];
+  List<HighBidder> highBidder = [];
   bool isBidderRunning = false;
   bool isGettingProducts = false;
+  int auctionTime = 0;
   Timer? timer;
   Timer? auctionTimer;
   bool isGettingBidders = false;
   int currentIndex = 0;
   bool isFirst = true;
-
+  Duration? duration = const Duration();
   int? startedTime;
   int? productId;
+  int pid = 0;
 
   getAuction() async {
     try {
@@ -55,10 +63,24 @@ class BidderProvider extends ChangeNotifier {
         productId = idd;
         var d = DateTime.now()
             .difference(DateTime.parse(response.data['dateTime']));
+<<<<<<< Updated upstream
         startedTime = d.inSeconds;
         // EasyLoading.showSuccess(
         //     "'startedTime': $startedTime productId: $productId");
         notifyListeners();
+=======
+        startedTime = d.inMinutes;
+        if (pid == idd) {
+          if ((d.inSeconds - Duration(minutes: auctionTime).inSeconds) < 0 &&
+              duration!.inSeconds == 0) {
+            duration = Duration(minutes: auctionTime) - d;
+
+            notifyListeners();
+          }
+        } else {
+          duration = const Duration();
+        }
+>>>>>>> Stashed changes
       }
     } catch (e) {
       print(e);
@@ -77,7 +99,7 @@ class BidderProvider extends ChangeNotifier {
       isFirst = false;
 
       notifyListeners();
-      timer = Timer.periodic(const Duration(seconds: 30), (timer) async {
+      timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
         try {
           print('get Bidder called');
 
@@ -105,6 +127,25 @@ class BidderProvider extends ChangeNotifier {
           //print(bidders);
         }
         bidders.sort(((a, b) => b.amount.compareTo(a.amount)));
+      }
+    } catch (e) {}
+  }
+
+  getHeighestBidderapiCall(int pid) async {
+    try {
+      var response = await Dio().get(getheighestBiddersIp + pid.toString());
+      if (response.statusCode == 200) {
+        highBidder.clear();
+        //var data = jsonDecode(response.data);
+        for (var element in response.data) {
+          //print(jsonDecode(element));
+          print(element as Map<String, dynamic>);
+          print((element)['product_id']);
+          highBidder.add(HighBidder.fromMap(element));
+
+          //print(bidders);
+        }
+        highBidder.sort(((a, b) => b.amount.compareTo(a.amount)));
       }
     } catch (e) {}
   }

@@ -756,7 +756,8 @@ class _DashboardViewState extends State<DashboardView> {
                                                                               .id);
                                                                       snackBar(
                                                                           context,
-                                                                          "Item updated for reselling.");
+                                                                          "Item updated for reselling.",
+                                                                          null);
                                                                     },
                                                                     icon:
                                                                         const ImageIcon(
@@ -816,54 +817,55 @@ class _DashboardViewState extends State<DashboardView> {
                                                               ),
                                                             ),
                                                           )
-                                                        : product.productType ==
-                                                                "Sold"
-                                                            ? Container(
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color:
-                                                                      scfColor3,
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              15),
-                                                                ),
-                                                                margin:
-                                                                    const EdgeInsets
-                                                                        .symmetric(
-                                                                  vertical: 10,
-                                                                ),
-                                                                child: Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                          .symmetric(
-                                                                    horizontal:
-                                                                        10.0,
-                                                                    vertical: 5,
-                                                                  ),
-                                                                  child: Row(
-                                                                    children: [
-                                                                      TextWidget(
-                                                                        title:
-                                                                            "Item Sold At: £",
-                                                                        txtSize:
-                                                                            12,
-                                                                        txtColor:
-                                                                            txtColor,
-                                                                      ),
-                                                                      TextWidget(
-                                                                        title:
-                                                                            "3458",
-                                                                        txtSize:
-                                                                            12,
-                                                                        txtColor:
-                                                                            txtColor.withOpacity(.8),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              )
-                                                            : const SizedBox(),
+                                                        // : product.productType ==
+                                                        //         "Sold"
+                                                        //     ? Container(
+                                                        //         decoration:
+                                                        //             BoxDecoration(
+                                                        //           color:
+                                                        //               scfColor3,
+                                                        //           borderRadius:
+                                                        //               BorderRadius
+                                                        //                   .circular(
+                                                        //                       15),
+                                                        //         ),
+                                                        //         margin:
+                                                        //             const EdgeInsets
+                                                        //                 .symmetric(
+                                                        //           vertical: 10,
+                                                        //         ),
+                                                        //         child: Padding(
+                                                        //           padding:
+                                                        //               const EdgeInsets
+                                                        //                   .symmetric(
+                                                        //             horizontal:
+                                                        //                 10.0,
+                                                        //             vertical: 5,
+                                                        //           ),
+                                                        //           child: Row(
+                                                        //             children: [
+                                                        //               TextWidget(
+                                                        //                 title:
+                                                        //                     "Item Sold At: £",
+                                                        //                 txtSize:
+                                                        //                     12,
+                                                        //                 txtColor:
+                                                        //                     txtColor,
+                                                        //               ),
+                                                        //               TextWidget(
+                                                        //                 title:
+                                                        //                     "3458",
+                                                        //                 txtSize:
+                                                        //                     12,
+                                                        //                 txtColor:
+                                                        //                     txtColor.withOpacity(.8),
+                                                        //               ),
+                                                        //             ],
+                                                        //           ),
+                                                        //         ),
+                                                        //       )
+
+                                                        : const SizedBox(),
                                                   ],
                                                 ),
                                               ),
@@ -934,9 +936,9 @@ class _DashboardViewState extends State<DashboardView> {
                                                                               pid: product.id);
                                                                           // ignore: use_build_context_synchronously
                                                                           snackBar(
-                                                                            context,
-                                                                            "Item set to Auction",
-                                                                          );
+                                                                              context,
+                                                                              "Item set to Auction",
+                                                                              null);
                                                                           //
                                                                         },
                                                                         icon:
@@ -962,9 +964,9 @@ class _DashboardViewState extends State<DashboardView> {
                                                                             .id);
                                                                     // ignore: use_build_context_synchronously
                                                                     snackBar(
-                                                                      context,
-                                                                      "Item set to Quick Sale",
-                                                                    );
+                                                                        context,
+                                                                        "Item set to Quick Sale",
+                                                                        null);
                                                                     //
                                                                   },
                                                                   icon:
@@ -1217,7 +1219,8 @@ class _DashboardViewState extends State<DashboardView> {
                                                                               pid: product.id);
                                                                           snackBar(
                                                                               context,
-                                                                              "Item updated for reselling.");
+                                                                              "Item updated for reselling.",
+                                                                              null);
                                                                         },
                                                                         icon:
                                                                             const ImageIcon(
@@ -1400,10 +1403,7 @@ class _DashboardViewState extends State<DashboardView> {
                                                                                 () async {
                                                                               await productprovider!.updateType(type: 'Auction', pid: product.id);
                                                                               // ignore: use_build_context_synchronously
-                                                                              snackBar(
-                                                                                context,
-                                                                                "Item set to Auction",
-                                                                              );
+                                                                              snackBar(context, "Item set to Auction", null);
                                                                               //
                                                                             },
                                                                             icon:
@@ -1426,9 +1426,9 @@ class _DashboardViewState extends State<DashboardView> {
                                                                                 product.id);
                                                                         // ignore: use_build_context_synchronously
                                                                         snackBar(
-                                                                          context,
-                                                                          "Item set to Quick Sale",
-                                                                        );
+                                                                            context,
+                                                                            "Item set to Quick Sale",
+                                                                            null);
                                                                         //
                                                                       },
                                                                       icon:

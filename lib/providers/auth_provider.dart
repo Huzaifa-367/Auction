@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:js';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_dashboard/Global/Global.dart';
+import 'package:flutter_admin_dashboard/Global/Widgets/SnackBar/SnackBar.dart';
 import 'package:flutter_admin_dashboard/api/ApiHandler.dart';
 import 'package:flutter_admin_dashboard/api/cafe_api.dart';
 import 'package:flutter_admin_dashboard/services/local_storage.dart';
@@ -65,6 +67,7 @@ class AuthProvider extends ChangeNotifier {
       print(json);
       //final authResponse = AuthResponse.fromMap(json);
       var data = jsonDecode(json);
+      //snackBar(context, "User added succesfully", null);
       Get.showSnackbar(GetSnackBar(
         duration: const Duration(seconds: 2),
         message: data['message'],

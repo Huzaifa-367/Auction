@@ -38,7 +38,7 @@ class Controllers {
   }
 
   static TextEditingController timmer = TextEditingController();
-  static clearTimmerControllers() {
-    timmer.text = '';
-  }
+  // static clearTimmerControllers() {
+  //   timmer.text = '';
+  // }
 }

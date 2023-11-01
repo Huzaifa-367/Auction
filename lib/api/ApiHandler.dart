@@ -14,6 +14,7 @@ String getProduct = '${ip}getapi.php';
 String getProductByTypeIp = '${ip}GetProductByType.php';
 String changeProductTypeIp = '${ip}changeProductType.php';
 String getBiddersIp = '${ip}getBidders.php?product_id=';
+String getheighestBiddersIp = '${ip}GetHeighestBidderApi.php?product_id=';
 String addBiddersIp = '${ip}addBidder.php';
 String addTimerApi = '${ip}AddAuctionStartTime.php?time=';
 String getAuctionDetailApi = '${ip}GetAuctionTimer.php';
