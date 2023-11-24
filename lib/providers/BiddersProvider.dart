@@ -6,11 +6,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_dashboard/api/ApiHandler.dart';
 import 'package:flutter_admin_dashboard/models/Bidder_Model.dart';
-<<<<<<< Updated upstream
-import 'package:flutter_easyloading/flutter_easyloading.dart';
-=======
 import 'package:flutter_admin_dashboard/models/Heighest_Bidder_Model.dart';
->>>>>>> Stashed changes
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../models/Product_Model.dart';
 
@@ -63,12 +60,6 @@ class BidderProvider extends ChangeNotifier {
         productId = idd;
         var d = DateTime.now()
             .difference(DateTime.parse(response.data['dateTime']));
-<<<<<<< Updated upstream
-        startedTime = d.inSeconds;
-        // EasyLoading.showSuccess(
-        //     "'startedTime': $startedTime productId: $productId");
-        notifyListeners();
-=======
         startedTime = d.inMinutes;
         if (pid == idd) {
           if ((d.inSeconds - Duration(minutes: auctionTime).inSeconds) < 0 &&
@@ -80,7 +71,6 @@ class BidderProvider extends ChangeNotifier {
         } else {
           duration = const Duration();
         }
->>>>>>> Stashed changes
       }
     } catch (e) {
       print(e);
