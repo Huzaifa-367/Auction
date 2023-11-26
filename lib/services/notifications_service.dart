@@ -7,9 +7,17 @@ class NotificationsService {
 
   static showSnackBarError(String message) {
     final snackBar = SnackBar(
-      backgroundColor: Colors.red.withOpacity(0.9),
-      content: Text(message,
-          style: const TextStyle(color: Colors.white, fontSize: 20)),
+      elevation: 5,
+      backgroundColor: btnColor,
+      content: Text(
+        message,
+        style: TextStyle(
+          fontWeight: FontWeight.w800,
+          color: scfColor,
+          fontSize: 15,
+        ),
+      ),
+      duration: const Duration(seconds: 2),
     );
 
     messengerKey.currentState!.showSnackBar(snackBar);
@@ -17,9 +25,17 @@ class NotificationsService {
 
   static showSnackBar(String message) {
     final snackBar = SnackBar(
-      backgroundColor: btnColor.withOpacity(0.9),
-      content: Text(message,
-          style: const TextStyle(color: Colors.white, fontSize: 20)),
+      elevation: 5,
+      backgroundColor: btnColor,
+      content: Text(
+        message,
+        style: TextStyle(
+          fontWeight: FontWeight.w800,
+          color: scfColor,
+          fontSize: 15,
+        ),
+      ),
+      duration: const Duration(seconds: 2),
     );
 
     messengerKey.currentState!.showSnackBar(snackBar);

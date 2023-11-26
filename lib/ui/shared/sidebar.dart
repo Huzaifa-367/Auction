@@ -60,6 +60,24 @@ class Sidebar extends StatelessWidget {
           },
           if (loggedinuser!.userType == "admin") ...{
             MenuItem(
+              text: 'Sold',
+              icon: Icons.post_add_outlined,
+              onPressed: () {
+                bidderProvider.setInitial();
+                navigateTo(Flurorouter.soldRoute);
+              },
+              isActive: sideMenuProvider.currentPage == Flurorouter.soldRoute,
+            ),
+            MenuItem(
+              text: 'UnSold',
+              icon: Icons.post_add_outlined,
+              onPressed: () {
+                bidderProvider.setInitial();
+                navigateTo(Flurorouter.unSoldRoute);
+              },
+              isActive: sideMenuProvider.currentPage == Flurorouter.unSoldRoute,
+            ),
+            MenuItem(
               text: 'Accounts',
               icon: Icons.people_alt_outlined,
               childItems: [
@@ -87,6 +105,7 @@ class Sidebar extends StatelessWidget {
             //   isActive:
             //       sideMenuProvider.currentPage == Flurorouter.settingsRoute,
             // ),
+
             MenuItem(
               text: 'Blank',
               icon: Icons.post_add_outlined,

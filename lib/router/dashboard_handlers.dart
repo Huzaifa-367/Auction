@@ -5,6 +5,8 @@ import 'package:flutter_admin_dashboard/router/router.dart';
 import 'package:flutter_admin_dashboard/ui/Pages/Dashboard/New_User_view.dart';
 import 'package:flutter_admin_dashboard/ui/Pages/Dashboard/AllProductsView.dart';
 import 'package:flutter_admin_dashboard/ui/Pages/Dashboard/Setting_view.dart';
+import 'package:flutter_admin_dashboard/ui/Pages/Dashboard/sold_items_page.dart';
+import 'package:flutter_admin_dashboard/ui/Pages/Dashboard/unSold_items_pages.dart';
 import 'package:flutter_admin_dashboard/ui/Pages/blank_view.dart';
 import 'package:flutter_admin_dashboard/ui/Pages/Dashboard/dashbord_view.dart';
 import 'package:flutter_admin_dashboard/ui/Pages/Auth/login_view.dart';
@@ -21,7 +23,7 @@ class DashboardHandlers {
     if (authProvider.authStatus == AuthStatus.authenticated) {
       return const DashboardView();
     } else {
-      return LoginView();
+      return const LoginView();
     }
   });
 
@@ -34,7 +36,7 @@ class DashboardHandlers {
     if (authProvider.authStatus == AuthStatus.authenticated) {
       return const AllProductsView();
     } else {
-      return LoginView();
+      return const LoginView();
     }
   });
 
@@ -89,7 +91,7 @@ class DashboardHandlers {
     if (authProvider.authStatus == AuthStatus.authenticated) {
       return const NewUserView();
     } else {
-      return LoginView();
+      return const LoginView();
     }
     //return null;
   });
@@ -103,7 +105,33 @@ class DashboardHandlers {
     if (authProvider.authStatus == AuthStatus.authenticated) {
       return const SettingView();
     } else {
-      return LoginView();
+      return const LoginView();
+    }
+  });
+
+  // sold Handler
+  static Handler sold = Handler(handlerFunc: (context, parameters) {
+    final authProvider = Provider.of<AuthProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.soldRoute);
+
+    if (authProvider.authStatus == AuthStatus.authenticated) {
+      return const SoldItemsPage();
+    } else {
+      return const LoginView();
+    }
+  });
+
+  // unsold Handler
+  static Handler unsold = Handler(handlerFunc: (context, parameters) {
+    final authProvider = Provider.of<AuthProvider>(context!);
+    Provider.of<SideMenuProvider>(context, listen: false)
+        .setCurrentPageUrl(Flurorouter.unSoldRoute);
+
+    if (authProvider.authStatus == AuthStatus.authenticated) {
+      return const unSoldItemsPage();
+    } else {
+      return const LoginView();
     }
   });
 
@@ -116,7 +144,7 @@ class DashboardHandlers {
     if (authProvider.authStatus == AuthStatus.authenticated) {
       return const BlankView();
     } else {
-      return LoginView();
+      return const LoginView();
     }
   });
 }

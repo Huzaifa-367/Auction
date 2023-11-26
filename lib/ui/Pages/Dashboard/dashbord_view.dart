@@ -91,7 +91,7 @@ class _DashboardViewState extends State<DashboardView> {
                             FittedBox(
                               child: Text(
                                 productprovider!.details != null
-                                    ? '£:${productprovider!.details!.lastWeekSales!.totalPrice ?? ''}'
+                                    ? '£: ${productprovider!.details!.lastWeekSales!.totalPrice ?? '0'}'
                                     : '£: 0',
                                 style: Theme.of(context)
                                     .textTheme
