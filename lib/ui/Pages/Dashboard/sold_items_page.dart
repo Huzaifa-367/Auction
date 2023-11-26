@@ -5,6 +5,7 @@ import 'package:flutter_admin_dashboard/providers/productsProvider.dart';
 import 'package:flutter_admin_dashboard/providers/side_menu_provider.dart';
 import 'package:flutter_admin_dashboard/services/navigation_service.dart';
 import 'package:flutter_admin_dashboard/ui/Pages/Dashboard/AllProductsView.dart';
+import 'package:flutter_admin_dashboard/ui/Pages/Dashboard/unSold_items_pages.dart';
 import 'package:provider/provider.dart';
 
 class SoldItemsPage extends StatefulWidget {
@@ -45,7 +46,8 @@ class _SoldItemsPageState extends State<SoldItemsPage> {
           WhiteCard(
             title: "Sold Products",
             width: MediaQuery.of(context).size.width,
-            child: products(context, productprovider, bidderProvider),
+            child:
+                productstype(context, productprovider, bidderProvider, "Sold"),
           ),
         ],
       ),

@@ -209,7 +209,11 @@ class _DashboardViewState extends State<AllProductsView> {
           WhiteCard(
             title: "Products",
             width: MediaQuery.of(context).size.width,
-            child: products(context, productprovider, bidderProvider),
+            child: products(
+              context,
+              productprovider,
+              bidderProvider,
+            ),
           ),
         ],
       ),
