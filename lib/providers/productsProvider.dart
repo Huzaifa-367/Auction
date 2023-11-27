@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_dashboard/models/DetailModel.dart';
+import 'package:flutter_admin_dashboard/providers/BiddingsHandler.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get.dart' as g;
 import 'package:image_picker/image_picker.dart';
 import '../api/ApiHandler.dart';
 import '../models/Product_Model.dart';
@@ -41,6 +43,7 @@ class Productprovider extends ChangeNotifier {
           products.add(p);
         }
         filteredProducts = products;
+        g.Get.find<BiddingHandler>().products = products;
       }
     } catch (e) {
       print(e);
@@ -98,12 +101,15 @@ class Productprovider extends ChangeNotifier {
     try {
       if (toFilter == 'All Items') {
         filteredProducts = products;
+        g.Get.find<BiddingHandler>().products = products;
       } else {
         filteredProducts = products
             .where((element) =>
                 element.productType.toLowerCase() ==
                 toFilter.toLowerCase().split(' ')[0])
             .toList();
+
+        g.Get.find<BiddingHandler>().products = filteredProducts;
       }
       notifyListeners();
     } catch (e) {}

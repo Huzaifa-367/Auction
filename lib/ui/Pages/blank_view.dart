@@ -188,5 +188,4 @@ class _StopWatchTimerPageState extends State<StopWatchTimerPage> {
             child: const Text("Start"),
           );
   }
-
 }

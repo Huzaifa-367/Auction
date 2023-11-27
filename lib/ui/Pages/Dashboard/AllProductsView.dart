@@ -1,4 +1,5 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_dashboard/Global/Global.dart';
 import 'package:flutter_admin_dashboard/Global/Widgets/SnackBar/SnackBar.dart';
@@ -433,19 +434,32 @@ Widget products(context, productprovider, bidderProvider) {
                                                                     TextButton(
                                                                       onPressed:
                                                                           () async {
+                                                                        // Get the current time
+                                                                        DateTime
+                                                                            now =
+                                                                            DateTime.now();
+
+                                                                        // Convert the DateTime to a Timestamp
+                                                                        Timestamp
+                                                                            time =
+                                                                            Timestamp.fromDate(now);
                                                                         await bidderProvider!
                                                                             .addBidder(
                                                                           bidder:
                                                                               Bidder(
                                                                             id: 0,
                                                                             product_id:
-                                                                                product.id,
+                                                                                1,
                                                                             user_Name:
                                                                                 Controllers.biddername.text,
                                                                             phoneNo:
                                                                                 Controllers.telephone.text,
                                                                             amount:
-                                                                                int.parse(Controllers.amount.text),
+                                                                                int.parse(
+                                                                              Controllers.amount.text,
+                                                                            ),
+                                                                            time:
+                                                                                time,
                                                                           ),
                                                                         );
                                                                         // ignore: use_build_context_synchronously
@@ -975,13 +989,21 @@ Widget products(context, productprovider, bidderProvider) {
                                                                               ),
                                                                               TextButton(
                                                                                 onPressed: () async {
+                                                                                  // Get the current time
+                                                                                  DateTime now = DateTime.now();
+
+                                                                                  // Convert the DateTime to a Timestamp
+                                                                                  Timestamp time = Timestamp.fromDate(now);
                                                                                   await bidderProvider!.addBidder(
                                                                                     bidder: Bidder(
                                                                                       id: 0,
                                                                                       product_id: 1,
                                                                                       user_Name: Controllers.biddername.text,
                                                                                       phoneNo: Controllers.telephone.text,
-                                                                                      amount: int.parse(Controllers.amount.text),
+                                                                                      amount: int.parse(
+                                                                                        Controllers.amount.text,
+                                                                                      ),
+                                                                                      time: time,
                                                                                     ),
                                                                                   );
 

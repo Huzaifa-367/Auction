@@ -1,11 +1,14 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Bidder {
   int id;
   int product_id;
   String user_Name;
   String phoneNo;
   int amount;
+  Timestamp time;
 
   Bidder({
     required this.id,
@@ -13,6 +16,7 @@ class Bidder {
     required this.user_Name,
     required this.phoneNo,
     required this.amount,
+    required this.time,
   });
 
   Bidder copyWith({
@@ -21,6 +25,7 @@ class Bidder {
     String? user_Name,
     String? phoneNo,
     int? amount,
+    Timestamp? time,
   }) {
     return Bidder(
       id: id ?? this.id,
@@ -28,6 +33,7 @@ class Bidder {
       user_Name: user_Name ?? this.user_Name,
       phoneNo: phoneNo ?? this.phoneNo,
       amount: amount ?? this.amount,
+      time: time ?? this.time,
     );
   }
 
@@ -39,17 +45,19 @@ class Bidder {
     result.addAll({'user_Name': user_Name});
     result.addAll({'phoneNo': phoneNo});
     result.addAll({'amount': amount});
+    result.addAll({'time': time});
 
     return result;
   }
 
   factory Bidder.fromMap(Map<String, dynamic> map) {
     return Bidder(
-      id: int.parse(map['id']) ?? 0,
-      product_id: int.parse(map['product_id']) ?? 0,
+      id: map['id']?.toInt() ?? 0,
+      product_id: map['product_id']?.toInt() ?? 0,
       user_Name: map['user_Name'] ?? '',
       phoneNo: map['phoneNo'] ?? '',
-      amount: int.parse(map['amount'].toString()) ?? 0,
+      amount: map['amount']?.toInt() ?? 0,
+      time: map['time'],
     );
   }
 
@@ -59,7 +67,7 @@ class Bidder {
 
   @override
   String toString() {
-    return 'Bidder(id: $id, product_id: $product_id, user_Name: $user_Name, phoneNo: $phoneNo, amount: $amount)';
+    return 'Bidder(id: $id, product_id: $product_id, user_Name: $user_Name, phoneNo: $phoneNo, amount: $amount, time: $time)';
   }
 
   @override
@@ -71,7 +79,8 @@ class Bidder {
         other.product_id == product_id &&
         other.user_Name == user_Name &&
         other.phoneNo == phoneNo &&
-        other.amount == amount;
+        other.amount == amount &&
+        other.time == time;
   }
 
   @override
@@ -80,6 +89,7 @@ class Bidder {
         product_id.hashCode ^
         user_Name.hashCode ^
         phoneNo.hashCode ^
-        amount.hashCode;
+        amount.hashCode ^
+        time.hashCode;
   }
 }

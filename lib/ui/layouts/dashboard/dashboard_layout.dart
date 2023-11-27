@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_dashboard/providers/BiddersProvider.dart';
+import 'package:flutter_admin_dashboard/providers/BiddingsHandler.dart';
 import 'package:flutter_admin_dashboard/providers/side_menu_provider.dart';
 import 'package:flutter_admin_dashboard/ui/shared/navbar.dart';
 import 'package:flutter_admin_dashboard/ui/shared/sidebar.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class DashboardLayout extends StatefulWidget {
@@ -29,6 +31,7 @@ class _DashboardLayoutState extends State<DashboardLayout>
       }
       bidderProvider.getAuction();
     }
+    Get.put(BiddingHandler()).startListening();
     SideMenuProvider.menuController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300));
   }
