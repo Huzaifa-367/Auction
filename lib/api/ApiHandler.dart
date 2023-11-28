@@ -2,13 +2,16 @@ import 'package:dio/dio.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 String ip = 'https://php.cozyreach.com/';
-String productImageIp = 'https://php.cozyreach.com/uploads/';
+String productImageIp = '${ip}uploads/';
 String userLoginAPi = '${ip}UserLogin.php';
 String signUpAPi = '${ip}create_api.php';
 String updateProductApi = '${ip}UpdateProductApi.php';
+String updateVisibleApi = '${ip}UpdateVisibleApi.php';
 String getAdminDetail = '${ip}getDetailForAdminApi.php';
 Options option = Options(headers: {'Content-Type': 'application/json'});
 String addProductIp = '${ip}AddproductApi.php';
+String addDonationIp = '${ip}addDonationApi.php';
+String getDonationAmountIp = '${ip}GetDonationAmountApi.php';
 String addProductImageIp = '${ip}addProductImage.php';
 String getProduct = '${ip}getapi.php';
 String getProductByTypeIp = '${ip}GetProductByType.php';

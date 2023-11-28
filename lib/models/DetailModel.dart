@@ -6,13 +6,16 @@ class Details {
   String? totalProducts;
   String? totalSales;
   String auction_time;
+  String? totaldonations;
   LastWeekSales? lastWeekSales;
+
   Details({
     this.auctionCount,
     this.teleCount,
     this.totalProducts,
     this.totalSales,
     required this.auction_time,
+    this.totaldonations,
     this.lastWeekSales,
   });
 
@@ -22,6 +25,7 @@ class Details {
     String? totalProducts,
     String? totalSales,
     String? auction_time,
+    String? totaldonations,
     LastWeekSales? lastWeekSales,
   }) {
     return Details(
@@ -30,6 +34,7 @@ class Details {
       totalProducts: totalProducts ?? this.totalProducts,
       totalSales: totalSales ?? this.totalSales,
       auction_time: auction_time ?? this.auction_time,
+      totaldonations: totaldonations ?? this.totaldonations,
       lastWeekSales: lastWeekSales ?? this.lastWeekSales,
     );
   }
@@ -50,6 +55,9 @@ class Details {
       result.addAll({'totalSales': totalSales});
     }
     result.addAll({'auction_time': auction_time});
+    if (totaldonations != null) {
+      result.addAll({'totaldonations': totaldonations});
+    }
     if (lastWeekSales != null) {
       result.addAll({'lastWeekSales': lastWeekSales!.toMap()});
     }
@@ -64,6 +72,7 @@ class Details {
       totalProducts: map['totalProducts'],
       totalSales: map['totalSales'],
       auction_time: map['auction_time'] ?? '',
+      totaldonations: map['totaldonations'],
       lastWeekSales: map['lastWeekSales'] != null
           ? LastWeekSales.fromMap(map['lastWeekSales'])
           : null,
@@ -77,7 +86,7 @@ class Details {
 
   @override
   String toString() {
-    return 'Details(auctionCount: $auctionCount, teleCount: $teleCount, totalProducts: $totalProducts, totalSales: $totalSales, auction_time: $auction_time, lastWeekSales: $lastWeekSales)';
+    return 'Details(auctionCount: $auctionCount, teleCount: $teleCount, totalProducts: $totalProducts, totalSales: $totalSales, auction_time: $auction_time, totaldonations: $totaldonations, lastWeekSales: $lastWeekSales)';
   }
 
   @override
@@ -90,6 +99,7 @@ class Details {
         other.totalProducts == totalProducts &&
         other.totalSales == totalSales &&
         other.auction_time == auction_time &&
+        other.totaldonations == totaldonations &&
         other.lastWeekSales == lastWeekSales;
   }
 
@@ -100,6 +110,7 @@ class Details {
         totalProducts.hashCode ^
         totalSales.hashCode ^
         auction_time.hashCode ^
+        totaldonations.hashCode ^
         lastWeekSales.hashCode;
   }
 }

@@ -12,7 +12,7 @@ class Navbar extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      height: 100,
+      height: 130,
       decoration: buildBoxDecoration(),
       child: Wrap(
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -25,49 +25,51 @@ class Navbar extends StatelessWidget {
           //const SizedBox(width: 10),
           Padding(
             padding: const EdgeInsets.only(left: 12),
-            child: TextWidget(
-              title: "OSA Auction System",
-              txtSize: 25,
-              txtColor: txtColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 12, left: 20),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.6,
-              height: 100,
-              child: Row(
-                children: [
-                  TextWidget(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextWidget(
+                  title: "OSA Auction System",
+                  txtSize: 25,
+                  txtColor: txtColor,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: TextWidget(
                     title: "Loggedin As: ${loggedinuser!.name}",
                     txtSize: 15,
                     txtColor: red,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 12, left: 20),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: 80,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Image.asset(
                       "assets/OSA.png",
                       height: 100,
                       width: 120,
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(
+                    Image.asset(
                       "assets/RADIO.png",
                       height: 100,
                       width: 120,
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Image.asset(
+                    Image.asset(
                       "assets/cslogo.png",
                       height: 100,
                       width: 120,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

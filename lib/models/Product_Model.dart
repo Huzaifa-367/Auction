@@ -19,7 +19,7 @@ class Product {
   String? auctioneddatetime;
 
   bool isQuickSale;
-  bool isLive;
+  bool isVisible;
   int id;
   Product({
     required this.name,
@@ -34,7 +34,7 @@ class Product {
     required this.type,
     required this.qty,
     required this.isQuickSale,
-    required this.isLive,
+    required this.isVisible,
     required this.id,
     this.auctioneddatetime,
   });
@@ -53,7 +53,7 @@ class Product {
     String? type,
     String? qty,
     bool? isQuickSale,
-    bool? isLive,
+    bool? isVisible,
     int? id,
   }) {
     return Product(
@@ -70,7 +70,7 @@ class Product {
       type: type ?? this.type,
       qty: qty ?? this.qty,
       isQuickSale: isQuickSale ?? this.isQuickSale,
-      isLive: isLive ?? this.isLive,
+      isVisible: isVisible ?? this.isVisible,
       id: id ?? this.id,
     );
   }
@@ -91,7 +91,7 @@ class Product {
     result.addAll({'type': type});
     result.addAll({'qty': qty});
     result.addAll({'isQuickSale': isQuickSale});
-    result.addAll({'isLive': isLive});
+    result.addAll({'isVisible': isVisible});
     result.addAll({'id': id});
 
     return result;
@@ -112,7 +112,7 @@ class Product {
       type: map['type'] ?? '',
       qty: map['qty'] ?? '',
       isQuickSale: map['isQuickSale'] ?? false,
-      isLive: map['isLive'] ?? false,
+      isVisible: map['isVisible'] ?? false,
       id: int.parse(map['id'] ?? 0),
     );
   }
@@ -124,7 +124,7 @@ class Product {
 
   @override
   String toString() {
-    return 'Product(name: $name, donorName: $donorName, retailvalue: $retailvalue, lotNo: $lotNo, image_urls: $image_urls, description: $description, logo: $logo, auctionTime: $auctionTime, auctioneddatetime: $auctioneddatetime,productType: $productType, type: $type, qty: $qty, isQuickSale: $isQuickSale, isLive: $isLive, id: $id)';
+    return 'Product(name: $name, donorName: $donorName, retailvalue: $retailvalue, lotNo: $lotNo, image_urls: $image_urls, description: $description, logo: $logo, auctionTime: $auctionTime, auctioneddatetime: $auctioneddatetime,productType: $productType, type: $type, qty: $qty, isQuickSale: $isQuickSale, isVisible: $isVisible, id: $id)';
   }
 
   @override
@@ -145,7 +145,7 @@ class Product {
         other.type == type &&
         other.qty == qty &&
         other.isQuickSale == isQuickSale &&
-        other.isLive == isLive &&
+        other.isVisible == isVisible &&
         other.id == id;
   }
 
@@ -164,7 +164,7 @@ class Product {
         type.hashCode ^
         qty.hashCode ^
         isQuickSale.hashCode ^
-        isLive.hashCode ^
+        isVisible.hashCode ^
         id.hashCode;
   }
 }

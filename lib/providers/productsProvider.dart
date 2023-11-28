@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_dashboard/models/DetailModel.dart';
+import 'package:flutter_admin_dashboard/models/Donation_Model.dart';
 import 'package:flutter_admin_dashboard/providers/BiddingsHandler.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart' as g;
@@ -11,9 +12,13 @@ import '../models/Product_Model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 
+double? donationAmount, salesAmount = 0;
+
 class Productprovider extends ChangeNotifier {
   List<Product> products = [];
+  List<Donation> donation = [];
   bool isGettingProducts = true;
+  bool isGettingDonations = true;
   Details? details;
   List<Product> filteredProducts = [];
   List<XFile> pickedFiles = [];
@@ -97,6 +102,57 @@ class Productprovider extends ChangeNotifier {
     }
   }
 
+  addDonation(Donation donation) async {
+    try {
+      FormData formData = FormData.fromMap(donation.toMap());
+      var response =
+          await Dio().post(addDonationIp, data: formData, options: option);
+      if (response.statusCode == 200) {
+        print(response.data);
+        await getDetailForAdmin();
+        notifyListeners();
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  // getDonationAmount() async {
+  //   try {
+  //     // getDetailForAdmin();
+  //     isGettingDonations = true;
+  //     notifyListeners();
+  //     var response = await Dio().get(getDonationAmountIp);
+  //     print(response);
+  //     if (response.statusCode == 200) {
+  //       products.clear();
+  //       var data = jsonDecode(response.data);
+  //       for (var element in data) {
+  //         Product p = Product.fromMap(element);
+  //         try {
+  //           // var images = await FirebaseFirestore.instance
+  //           //     .collection('ProductsImages')
+  //           //     .where('Pid', isEqualTo: p.id)
+  //           //     .get();
+  //           // for (var element in images.docs) {
+  //           //   p.images.add(element['url']);
+  //           // }
+  //         } catch (e) {
+  //           SnackBar(content: Text(e.toString()));
+  //         }
+  //         products.add(p);
+  //       }
+  //       filteredProducts = products;
+  //       g.Get.find<BiddingHandler>().products = products;
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //     SnackBar(content: Text(e.toString()));
+  //   }
+  //   isGettingProducts = false;
+  //   notifyListeners();
+  // }
+
   applyFilter({required String toFilter}) async {
     try {
       if (toFilter == 'All Items') {
@@ -151,19 +207,40 @@ class Productprovider extends ChangeNotifier {
     }
   }
 
+  updateVisibility({required bool isVisible, required int pid}) async {
+    try {
+      var response = await Dio().post(updateVisibleApi,
+          options: option,
+          data: FormData.fromMap({'pid': pid, 'isVisible': isVisible}));
+      if (response.statusCode == 200) {
+        int index = products.indexWhere((element) => element.id == pid);
+        products[index].isVisible = isVisible;
+        notifyListeners();
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   getDetailForAdmin() async {
     try {
       var response = await Dio().get(getAdminDetail);
       if (response.statusCode == 200) {
         details = Details(
-            auction_time: response.data['auction_time'],
-            auctionCount: response.data['auction_count'],
-            lastWeekSales: LastWeekSales(
-                productCount: response.data['last_week_sales']['product_count'],
-                totalPrice: response.data['last_week_sales']['total_price']),
-            teleCount: response.data['tele_count'],
-            totalProducts: response.data['total_products'],
-            totalSales: response.data['total_sales']);
+          auction_time: response.data['auction_time'],
+          auctionCount: response.data['auction_count'],
+          lastWeekSales: LastWeekSales(
+              productCount: response.data['last_week_sales']['product_count'],
+              totalPrice: response.data['last_week_sales']['total_price']),
+          teleCount: response.data['tele_count'],
+          totalProducts: response.data['total_products'],
+          totalSales: response.data['total_sales'],
+          totaldonations: response.data['total_donation'] ?? '0',
+        );
+        salesAmount = double.parse(details!.lastWeekSales!.totalPrice ?? "0");
+        donationAmount = double.parse(details!.totaldonations ?? "0");
+
+        print('£: ${(donationAmount ?? 0) + (salesAmount ?? 0)}');
       }
       notifyListeners();
     } catch (e) {

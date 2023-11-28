@@ -3,8 +3,11 @@ import 'package:flutter_admin_dashboard/Global/Global.dart';
 import 'package:flutter_admin_dashboard/Global/Widgets/SnackBar/SnackBar.dart';
 import 'package:flutter_admin_dashboard/Global/Widgets/cards/white_card.dart';
 import 'package:flutter_admin_dashboard/Global/Widgets/labels/TextWidget.dart';
+import 'package:flutter_admin_dashboard/models/Donation_Model.dart';
+import 'package:flutter_admin_dashboard/providers/Controllers.dart';
 import 'package:flutter_admin_dashboard/providers/side_menu_provider.dart';
 import 'package:flutter_admin_dashboard/services/navigation_service.dart';
+import 'package:flutter_admin_dashboard/ui/Pages/Dashboard/AddDonation_POP.dart';
 import 'package:flutter_admin_dashboard/ui/Pages/Dashboard/Presenter_Screen.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,15 +29,16 @@ class _DashboardViewState extends State<DashboardView> {
     SideMenuProvider.closeMenu();
   }
 
+  Productprovider? productprovider;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     productprovider ??= context.read<Productprovider>();
     productprovider!.getProducts();
+    productprovider!.getDetailForAdmin();
   }
 
-  Productprovider? productprovider;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -90,9 +94,7 @@ class _DashboardViewState extends State<DashboardView> {
                           children: [
                             FittedBox(
                               child: Text(
-                                productprovider!.details != null
-                                    ? '£: ${productprovider!.details!.lastWeekSales!.totalPrice ?? '0'}'
-                                    : '£: 0',
+                                '£: ${(donationAmount ?? 0) + (salesAmount ?? 0)}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .headlineMedium
@@ -162,13 +164,109 @@ class _DashboardViewState extends State<DashboardView> {
                                 const Expanded(
                                   child: SizedBox(),
                                 ),
-                                const FittedBox(
-                                  child: ImageIcon(
-                                    AssetImage(
-                                      "assets/auction.png",
+                                FittedBox(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      loggedinuser!.userType == "admin"
+                                          ? showDialog(
+                                              //useSafeArea: true,
+                                              //To disable alert background
+                                              barrierDismissible: false,
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                icon: Align(
+                                                  alignment: Alignment.topRight,
+                                                  child: IconButton(
+                                                    onPressed: (() {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    }),
+                                                    icon: const Icon(
+                                                        Icons.cancel_outlined),
+                                                  ),
+                                                ),
+                                                content:
+                                                    const AddDonation_POP(),
+                                                //title: const Text("Alert Dialog Box"),
+                                                //content: const Text("Do you want to login?"),
+                                                actions: <Widget>[
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        color: btnColor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(25),
+                                                      ),
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                        horizontal: 25,
+                                                        vertical: 10,
+                                                      ),
+                                                      child: const TextWidget(
+                                                          title: "Cancel",
+                                                          txtSize: 15,
+                                                          txtColor:
+                                                              Colors.white),
+                                                    ),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () async {
+                                                      Donation d = Donation(
+                                                          description: Controllers
+                                                              .descriptionController
+                                                              .text,
+                                                          donorName: Controllers
+                                                              .donor_name_controller
+                                                              .text,
+                                                          id: 0,
+                                                          retailvalue:
+                                                              Controllers
+                                                                  .retailPrice
+                                                                  .text);
+                                                      await productprovider!
+                                                          .addDonation(
+                                                        d,
+                                                      );
+                                                      //snackBar(context, "Saved Successfully");
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        color: btnColor,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(25),
+                                                      ),
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                        horizontal: 25,
+                                                        vertical: 10,
+                                                      ),
+                                                      child: const TextWidget(
+                                                          title: "Save",
+                                                          txtSize: 15,
+                                                          txtColor:
+                                                              Colors.white),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          : null;
+                                    },
+                                    child: const ImageIcon(
+                                      AssetImage(
+                                        "assets/charity.png",
+                                      ),
+                                      color: Colors.red,
+                                      size: 45,
                                     ),
-                                    color: Colors.black,
-                                    size: 45,
                                   ),
                                 ),
                               ],
@@ -556,7 +654,9 @@ class _DashboardViewState extends State<DashboardView> {
                             final product =
                                 productprovider!.filteredProducts[index];
                             return (product.productType == "Auction" ||
-                                        product.productType == "Quick") &&
+                                        product.productType == "Quick" ||
+                                        product.productType == "Sold") &&
+                                    product.isVisible &&
                                     loggedinuser!.userType == "pres"
                                 ? GestureDetector(
                                     onTap: () {
@@ -653,26 +753,6 @@ class _DashboardViewState extends State<DashboardView> {
                                                         ),
                                                       ),
                                                     ),
-                                                    // loggedinuser!.userType == "admin"
-                                                    //     ? Positioned(
-                                                    //         top: 5,
-                                                    //         right: 5,
-                                                    //         child: IconButton(
-                                                    //           onPressed: () {
-                                                    //             //
-
-                                                    //             //
-                                                    //           },
-                                                    //           icon: const ImageIcon(
-                                                    //             AssetImage(
-                                                    //               "assets/edit.png",
-                                                    //             ),
-                                                    //             color: Colors.black,
-                                                    //             size: 25,
-                                                    //           ),
-                                                    //         ),
-                                                    //       )
-                                                    //     : const SizedBox(),
                                                   ],
                                                 ),
                                               ),
@@ -746,28 +826,13 @@ class _DashboardViewState extends State<DashboardView> {
                                                               )
                                                             : product.productType ==
                                                                     "UnSold"
-                                                                ? IconButton(
-                                                                    onPressed:
-                                                                        () async {
-                                                                      await productprovider!.updateType(
-                                                                          type:
-                                                                              'gen',
-                                                                          pid: product
-                                                                              .id);
-                                                                      snackBar(
-                                                                          context,
-                                                                          "Item updated for reselling.",
-                                                                          null);
-                                                                    },
-                                                                    icon:
-                                                                        const ImageIcon(
-                                                                      AssetImage(
-                                                                        "assets/resell.png",
-                                                                      ),
-                                                                      color: Colors
-                                                                          .greenAccent,
-                                                                      size: 40,
+                                                                ? ImageIcon(
+                                                                    AssetImage(
+                                                                      "assets/resell.png",
                                                                     ),
+                                                                    color: Colors
+                                                                        .greenAccent,
+                                                                    size: 40,
                                                                   )
                                                                 : const SizedBox(),
                                                       ],
@@ -817,55 +882,54 @@ class _DashboardViewState extends State<DashboardView> {
                                                               ),
                                                             ),
                                                           )
-                                                        // : product.productType ==
-                                                        //         "Sold"
-                                                        //     ? Container(
-                                                        //         decoration:
-                                                        //             BoxDecoration(
-                                                        //           color:
-                                                        //               scfColor3,
-                                                        //           borderRadius:
-                                                        //               BorderRadius
-                                                        //                   .circular(
-                                                        //                       15),
-                                                        //         ),
-                                                        //         margin:
-                                                        //             const EdgeInsets
-                                                        //                 .symmetric(
-                                                        //           vertical: 10,
-                                                        //         ),
-                                                        //         child: Padding(
-                                                        //           padding:
-                                                        //               const EdgeInsets
-                                                        //                   .symmetric(
-                                                        //             horizontal:
-                                                        //                 10.0,
-                                                        //             vertical: 5,
-                                                        //           ),
-                                                        //           child: Row(
-                                                        //             children: [
-                                                        //               TextWidget(
-                                                        //                 title:
-                                                        //                     "Item Sold At: £",
-                                                        //                 txtSize:
-                                                        //                     12,
-                                                        //                 txtColor:
-                                                        //                     txtColor,
-                                                        //               ),
-                                                        //               TextWidget(
-                                                        //                 title:
-                                                        //                     "3458",
-                                                        //                 txtSize:
-                                                        //                     12,
-                                                        //                 txtColor:
-                                                        //                     txtColor.withOpacity(.8),
-                                                        //               ),
-                                                        //             ],
-                                                        //           ),
-                                                        //         ),
-                                                        //       )
-
-                                                        : const SizedBox(),
+                                                        : product.productType ==
+                                                                "Sold"
+                                                            ? Container(
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color:
+                                                                      scfColor3,
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              15),
+                                                                ),
+                                                                margin:
+                                                                    const EdgeInsets
+                                                                        .symmetric(
+                                                                  vertical: 10,
+                                                                ),
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .symmetric(
+                                                                    horizontal:
+                                                                        10.0,
+                                                                    vertical: 5,
+                                                                  ),
+                                                                  child: Row(
+                                                                    children: [
+                                                                      TextWidget(
+                                                                        title:
+                                                                            "Item Sold At: £",
+                                                                        txtSize:
+                                                                            12,
+                                                                        txtColor:
+                                                                            txtColor,
+                                                                      ),
+                                                                      TextWidget(
+                                                                        title:
+                                                                            "3458",
+                                                                        txtSize:
+                                                                            12,
+                                                                        txtColor:
+                                                                            txtColor.withOpacity(.8),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            : const SizedBox(),
                                                   ],
                                                 ),
                                               ),
@@ -1233,7 +1297,8 @@ class _DashboardViewState extends State<DashboardView> {
                                                                               40,
                                                                         ),
                                                                       )
-                                                                    : const SizedBox(),
+                                                                    : const SizedBox
+                                                                        .shrink(),
                                                           ],
                                                         ),
                                                         product.productType ==
@@ -1473,7 +1538,7 @@ class _DashboardViewState extends State<DashboardView> {
                                           ),
                                         ),
                                       )
-                                    : const SizedBox.shrink();
+                                    : SizedBox.shrink();
                           },
                         )
                       ],

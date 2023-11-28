@@ -235,13 +235,51 @@ Widget productstype(context, productprovider, bidderProvider, type) {
                                                           ],
                                                         ),
                                                         type == "Sold"
-                                                            ? const ImageIcon(
-                                                                AssetImage(
-                                                                  "assets/sold.png",
-                                                                ),
-                                                                color:
-                                                                    Colors.red,
-                                                                size: 40,
+                                                            ? Column(
+                                                                children: [
+                                                                  const ImageIcon(
+                                                                    AssetImage(
+                                                                      "assets/sold.png",
+                                                                    ),
+                                                                    color: Colors
+                                                                        .red,
+                                                                    size: 40,
+                                                                  ),
+                                                                  IconButton(
+                                                                    onPressed:
+                                                                        () async {
+                                                                      await productprovider!.updateVisibility(
+                                                                          isVisible: !product
+                                                                              .isVisible,
+                                                                          pid: product
+                                                                              .id);
+                                                                      snackBar(
+                                                                          context,
+                                                                          "Item visibility updated.",
+                                                                          null);
+                                                                    },
+                                                                    icon: product
+                                                                            .isVisible
+                                                                        ? const ImageIcon(
+                                                                            AssetImage(
+                                                                              "assets/visible.png",
+                                                                            ),
+                                                                            color:
+                                                                                Colors.red,
+                                                                            size:
+                                                                                40,
+                                                                          )
+                                                                        : const ImageIcon(
+                                                                            AssetImage(
+                                                                              "assets/invisible.png",
+                                                                            ),
+                                                                            color:
+                                                                                Colors.green,
+                                                                            size:
+                                                                                40,
+                                                                          ),
+                                                                  )
+                                                                ],
                                                               )
                                                             : const SizedBox(),
                                                       ],
@@ -291,6 +329,33 @@ Widget productstype(context, productprovider, bidderProvider, type) {
                                                             ),
                                                           )
                                                         : const SizedBox(),
+                                                    type == "UnSold"
+                                                        ? IconButton(
+                                                            onPressed:
+                                                                () async {
+                                                              await productprovider!
+                                                                  .updateType(
+                                                                      type:
+                                                                          'gen',
+                                                                      pid: product
+                                                                          .id);
+                                                              snackBar(
+                                                                  context,
+                                                                  "Item updated for reselling.",
+                                                                  null);
+                                                            },
+                                                            icon:
+                                                                const ImageIcon(
+                                                              AssetImage(
+                                                                "assets/resell.png",
+                                                              ),
+                                                              color: Colors
+                                                                  .greenAccent,
+                                                              size: 40,
+                                                            ),
+                                                          )
+                                                        : const SizedBox
+                                                            .shrink(),
                                                   ],
                                                 ),
                                               ),
