@@ -11,19 +11,6 @@ import '../api/ApiHandler.dart';
 class BiddingHandler extends GetxController {
   List<Product> products = [];
 
-  _getTheLatestBid() async {
-    try {
-      var res = await Dio().get(getLatestBid);
-      if (res.statusCode == 200) {
-        if (res.data != 'No results found') {
-          Bidder bidder = Bidder.fromJson(res.data);
-          EasyLoading.showToast(
-              'new bidd is here from ${bidder.user_Name} on products ${bidder.product_id}');
-        }
-      }
-    } catch (e) {}
-  }
-
   startListening() {
     try {
       _getTheLatestBid();
@@ -31,5 +18,20 @@ class BiddingHandler extends GetxController {
         _getTheLatestBid();
       });
     } catch (e) {}
+  }
+
+  _getTheLatestBid() async {
+    try {
+      var res = await Dio().get(getLatestBid);
+      if (res.statusCode == 200) {
+        if (res.data != 'No results found') {
+          Bidder bidder = Bidder.fromJson(res.data);
+          EasyLoading.showToast(
+              'new bidd from ${bidder.user_Name} on products ${bidder.product_id}');
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

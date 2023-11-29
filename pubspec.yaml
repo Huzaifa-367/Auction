@@ -13,15 +13,15 @@ environment:
 
 dependencies:
   animated_custom_dropdown: ^2.0.0
-  cloud_firestore: ^4.13.2
+  cloud_firestore: ^4.13.3
   cupertino_icons: ^1.0.6
   dio: ^5.3.4
   dropdown_search: ^5.0.6
   email_validator: ^2.1.17
   fan_carousel_image_slider: ^0.1.2
   fan_floating_menu: ^0.0.1
-  firebase_core: ^2.23.0
-  firebase_storage: ^11.5.2
+  firebase_core: ^2.24.0
+  firebase_storage: ^11.5.3
   fluro: ^2.0.5
   flutter:
     sdk: flutter

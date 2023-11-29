@@ -655,8 +655,8 @@ class _DashboardViewState extends State<DashboardView> {
                                 productprovider!.filteredProducts[index];
                             return (product.productType == "Auction" ||
                                         product.productType == "Quick" ||
-                                        product.productType == "Sold") &&
-                                    product.isVisible &&
+                                        product.productType == "Sold" ||
+                                        product.isVisible) &&
                                     loggedinuser!.userType == "pres"
                                 ? GestureDetector(
                                     onTap: () {
@@ -826,7 +826,7 @@ class _DashboardViewState extends State<DashboardView> {
                                                               )
                                                             : product.productType ==
                                                                     "UnSold"
-                                                                ? ImageIcon(
+                                                                ? const ImageIcon(
                                                                     AssetImage(
                                                                       "assets/resell.png",
                                                                     ),
@@ -1538,7 +1538,7 @@ class _DashboardViewState extends State<DashboardView> {
                                           ),
                                         ),
                                       )
-                                    : SizedBox.shrink();
+                                    : const SizedBox.shrink();
                           },
                         )
                       ],
