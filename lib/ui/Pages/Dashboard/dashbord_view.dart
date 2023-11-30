@@ -94,7 +94,10 @@ class _DashboardViewState extends State<DashboardView> {
                           children: [
                             FittedBox(
                               child: Text(
-                                '£: ${(donationAmount ?? 0) + (salesAmount ?? 0)}',
+                                "owie",
+                                // (donationAmount != null || salesAmount != null)
+                                //     ? '£: ${(donationAmount ?? 0) + (salesAmount ?? 0)}'
+                                //     : '£: 0',
                                 style: Theme.of(context)
                                     .textTheme
                                     .headlineMedium

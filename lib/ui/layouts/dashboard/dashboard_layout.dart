@@ -31,7 +31,7 @@ class _DashboardLayoutState extends State<DashboardLayout>
       }
       bidderProvider.getAuction();
     }
-    Get.put(BiddingHandler()).startListening();
+    //Get.put(BiddingHandler()).startListening();
     SideMenuProvider.menuController = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 300));
   }

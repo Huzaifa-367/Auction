@@ -449,7 +449,7 @@ Widget products(context, productprovider, bidderProvider) {
                                                                               Bidder(
                                                                             id: 0,
                                                                             product_id:
-                                                                                1,
+                                                                                product.id,
                                                                             user_Name:
                                                                                 Controllers.biddername.text,
                                                                             phoneNo:
@@ -997,7 +997,7 @@ Widget products(context, productprovider, bidderProvider) {
                                                                                   await bidderProvider!.addBidder(
                                                                                     bidder: Bidder(
                                                                                       id: 0,
-                                                                                      product_id: 1,
+                                                                                      product_id: product.id,
                                                                                       user_Name: Controllers.biddername.text,
                                                                                       phoneNo: Controllers.telephone.text,
                                                                                       amount: int.parse(
