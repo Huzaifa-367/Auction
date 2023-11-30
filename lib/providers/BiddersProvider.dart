@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_dashboard/api/ApiHandler.dart';
 import 'package:flutter_admin_dashboard/models/Bidder_Model.dart';
+import 'package:flutter_admin_dashboard/models/Donation_Model.dart';
 import 'package:flutter_admin_dashboard/models/Heighest_Bidder_Model.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -13,6 +14,7 @@ import '../models/Product_Model.dart';
 
 class BidderProvider extends ChangeNotifier {
   List<Bidder> bidders = [];
+
   List<HighBidder> highBidder = [];
   bool isBidderRunning = false;
   bool isGettingProducts = false;
@@ -65,7 +67,7 @@ class BidderProvider extends ChangeNotifier {
           if ((d.inSeconds - Duration(minutes: auctionTime).inSeconds) < 0 &&
               duration!.inSeconds == 0) {
             duration = Duration(minutes: auctionTime) - d;
-
+            print("getAuctionDetail()===========> $duration");
             notifyListeners();
           }
         } else {

@@ -61,7 +61,7 @@ class Sidebar extends StatelessWidget {
           if (loggedinuser!.userType == "admin") ...{
             MenuItem(
               text: 'Sold',
-              icon: Icons.post_add_outlined,
+              icon: Icons.sell_outlined,
               onPressed: () {
                 bidderProvider.setInitial();
                 navigateTo(Flurorouter.soldRoute);
@@ -70,7 +70,7 @@ class Sidebar extends StatelessWidget {
             ),
             MenuItem(
               text: 'UnSold',
-              icon: Icons.post_add_outlined,
+              icon: Icons.do_not_disturb_outlined,
               onPressed: () {
                 bidderProvider.setInitial();
                 navigateTo(Flurorouter.unSoldRoute);

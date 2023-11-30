@@ -23,53 +23,51 @@ class Navbar extends StatelessWidget {
               onPressed: () => SideMenuProvider.openMenu(),
             ),
           //const SizedBox(width: 10),
-          Padding(
-            padding: const EdgeInsets.only(left: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                TextWidget(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 12),
+                child: TextWidget(
                   title: "OSA Auction System",
                   txtSize: 25,
                   txtColor: txtColor,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: TextWidget(
-                    title: "Loggedin As: ${loggedinuser!.name}",
-                    txtSize: 15,
-                    txtColor: red,
-                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: TextWidget(
+                  title: "Loggedin As: ${loggedinuser!.name}",
+                  txtSize: 15,
+                  txtColor: red,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 12, left: 20),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.9,
-                height: 80,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Image.asset(
-                      "assets/OSA.png",
-                      height: 100,
-                      width: 120,
-                    ),
-                    Image.asset(
-                      "assets/RADIO.png",
-                      height: 100,
-                      width: 120,
-                    ),
-                    Image.asset(
-                      "assets/cslogo.png",
-                      height: 100,
-                      width: 120,
-                    ),
-                  ],
-                ),
+          Padding(
+            padding: const EdgeInsets.only(right: 12, left: 20),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: 80,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Image.asset(
+                    "assets/OSA.png",
+                    height: 100,
+                    width: 120,
+                  ),
+                  Image.asset(
+                    "assets/RADIO.png",
+                    height: 100,
+                    width: 120,
+                  ),
+                  Image.asset(
+                    "assets/cslogo.png",
+                    height: 100,
+                    width: 120,
+                  ),
+                ],
               ),
             ),
           ),

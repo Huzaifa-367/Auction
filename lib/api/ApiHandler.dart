@@ -12,6 +12,8 @@ Options option = Options(headers: {'Content-Type': 'application/json'});
 String addProductIp = '${ip}AddproductApi.php';
 String addDonationIp = '${ip}addDonationApi.php';
 String getDonationAmountIp = '${ip}GetDonationAmountApi.php';
+String getDonationsip = '${ip}getDonationsApi.php';
+
 String addProductImageIp = '${ip}addProductImage.php';
 String getProduct = '${ip}getapi.php';
 String getProductByTypeIp = '${ip}GetProductByType.php';

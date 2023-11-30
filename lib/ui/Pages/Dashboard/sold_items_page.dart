@@ -43,6 +43,7 @@ class _SoldItemsPageState extends State<SoldItemsPage> {
     return SingleChildScrollView(
       child: Column(
         children: [
+          
           WhiteCard(
             title: "Sold Products",
             width: MediaQuery.of(context).size.width,

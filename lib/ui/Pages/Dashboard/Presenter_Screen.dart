@@ -179,21 +179,29 @@ class _PresenterViewState extends State<PresenterView> {
                         Center(
                           child: Container(
                             //alignment: Alignment.center,
-                            height: MediaQuery.of(context).size.height * 0.8,
+                            height: widget.product.image_urls.isNotEmpty
+                                ? MediaQuery.of(context).size.height * 0.7
+                                : MediaQuery.of(context).size.height * 0.2,
                             //width: MediaQuery.of(context).size.width * 0.9,
                             margin: const EdgeInsets.only(
                                 top: 10, left: 30, right: 30, bottom: 10),
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               // color: scfColor,
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(24)),
+                                  const BorderRadius.all(Radius.circular(24)),
+                              border: Border.all(
+                                color: btnColor,
+                              ),
                             ),
                             child: Center(
                               child: Column(
                                 children: [
                                   SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.7,
+                                    height: widget.product.image_urls.isNotEmpty
+                                        ? MediaQuery.of(context).size.height *
+                                            0.7
+                                        : MediaQuery.of(context).size.height *
+                                            0.18,
                                     child: ParallaxSwiper(
                                       images: widget.product.image_urls,
                                       dragToScroll: true,

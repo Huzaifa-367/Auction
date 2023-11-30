@@ -26,6 +26,7 @@ class BiddingHandler extends GetxController {
       if (res.statusCode == 200) {
         if (res.data != 'No results found') {
           Bidder bidder = Bidder.fromJson(res.data);
+          print("_getTheLatestBid()===========> $bidder");
           EasyLoading.showToast(
               'new bidd from ${bidder.user_Name} on products ${bidder.product_id}');
         }

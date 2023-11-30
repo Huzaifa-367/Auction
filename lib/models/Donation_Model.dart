@@ -8,24 +8,30 @@ class Donation {
   String donorName;
   String retailvalue;
   String description;
+  String? date;
+  bool? isAnounced;
   int id;
-  Donation({
-    required this.donorName,
-    required this.retailvalue,
-    required this.description,
-    required this.id,
-  });
+  Donation(
+      {required this.donorName,
+      required this.retailvalue,
+      required this.description,
+      this.date,
+      required this.id,
+      this.isAnounced});
 
   Donation copyWith({
     String? donorName,
     String? retailvalue,
     String? description,
+    String? date,
     int? id,
+    bool? isAnounced,
   }) {
     return Donation(
       donorName: donorName ?? this.donorName,
       retailvalue: retailvalue ?? this.retailvalue,
       description: description ?? this.description,
+      date: date ?? this.date,
       id: id ?? this.id,
     );
   }
@@ -36,6 +42,9 @@ class Donation {
     result.addAll({'donorName': donorName});
     result.addAll({'retailvalue': retailvalue});
     result.addAll({'description': description});
+    if (date != null) {
+      result.addAll({'date': date});
+    }
     result.addAll({'id': id});
 
     return result;
@@ -46,6 +55,7 @@ class Donation {
       donorName: map['donorName'] ?? '',
       retailvalue: map['retailvalue'] ?? '',
       description: map['description'] ?? '',
+      date: map['date'],
       id: map['id']?.toInt() ?? 0,
     );
   }
@@ -57,7 +67,7 @@ class Donation {
 
   @override
   String toString() {
-    return 'Donation(donorName: $donorName, retailvalue: $retailvalue, description: $description, id: $id)';
+    return 'Donation(donorName: $donorName, retailvalue: $retailvalue, description: $description, date: $date, id: $id)';
   }
 
   @override
@@ -68,6 +78,7 @@ class Donation {
         other.donorName == donorName &&
         other.retailvalue == retailvalue &&
         other.description == description &&
+        other.date == date &&
         other.id == id;
   }
 
@@ -76,8 +87,7 @@ class Donation {
     return donorName.hashCode ^
         retailvalue.hashCode ^
         description.hashCode ^
+        date.hashCode ^
         id.hashCode;
   }
-
-  void add(Donation donation) {}
 }

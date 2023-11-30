@@ -258,14 +258,14 @@ Widget productstype(context, productprovider, bidderProvider, type) {
                                                                           "Item visibility updated.",
                                                                           null);
                                                                     },
-                                                                    icon: product
-                                                                            .isVisible
+                                                                    icon: product.isVisible ==
+                                                                            true
                                                                         ? const ImageIcon(
                                                                             AssetImage(
                                                                               "assets/visible.png",
                                                                             ),
                                                                             color:
-                                                                                Colors.red,
+                                                                                Colors.green,
                                                                             size:
                                                                                 40,
                                                                           )
@@ -274,7 +274,7 @@ Widget productstype(context, productprovider, bidderProvider, type) {
                                                                               "assets/invisible.png",
                                                                             ),
                                                                             color:
-                                                                                Colors.green,
+                                                                                Colors.red,
                                                                             size:
                                                                                 40,
                                                                           ),
@@ -282,6 +282,32 @@ Widget productstype(context, productprovider, bidderProvider, type) {
                                                                 ],
                                                               )
                                                             : const SizedBox(),
+                                                        type == "UnSold"
+                                                            ? IconButton(
+                                                                onPressed:
+                                                                    () async {
+                                                                  await productprovider!.updateType(
+                                                                      type:
+                                                                          'gen',
+                                                                      pid: product
+                                                                          .id);
+                                                                  snackBar(
+                                                                      context,
+                                                                      "Item updated for reselling.",
+                                                                      null);
+                                                                },
+                                                                icon:
+                                                                    const ImageIcon(
+                                                                  AssetImage(
+                                                                    "assets/resell.png",
+                                                                  ),
+                                                                  color: Colors
+                                                                      .greenAccent,
+                                                                  size: 40,
+                                                                ),
+                                                              )
+                                                            : const SizedBox
+                                                                .shrink(),
                                                       ],
                                                     ),
                                                     type == "UnSold"
@@ -329,33 +355,6 @@ Widget productstype(context, productprovider, bidderProvider, type) {
                                                             ),
                                                           )
                                                         : const SizedBox(),
-                                                    type == "UnSold"
-                                                        ? IconButton(
-                                                            onPressed:
-                                                                () async {
-                                                              await productprovider!
-                                                                  .updateType(
-                                                                      type:
-                                                                          'gen',
-                                                                      pid: product
-                                                                          .id);
-                                                              snackBar(
-                                                                  context,
-                                                                  "Item updated for reselling.",
-                                                                  null);
-                                                            },
-                                                            icon:
-                                                                const ImageIcon(
-                                                              AssetImage(
-                                                                "assets/resell.png",
-                                                              ),
-                                                              color: Colors
-                                                                  .greenAccent,
-                                                              size: 40,
-                                                            ),
-                                                          )
-                                                        : const SizedBox
-                                                            .shrink(),
                                                   ],
                                                 ),
                                               ),

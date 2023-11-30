@@ -5,12 +5,15 @@ import 'package:flutter_admin_dashboard/Global/Global.dart';
 import 'package:flutter_admin_dashboard/Global/Widgets/SnackBar/SnackBar.dart';
 import 'package:flutter_admin_dashboard/models/Bidder_Model.dart';
 import 'package:flutter_admin_dashboard/providers/BiddersProvider.dart';
+import 'package:flutter_admin_dashboard/providers/BiddingsHandler.dart';
 import 'package:flutter_admin_dashboard/ui/Pages/Dashboard/AddProduct_POP.dart';
 import 'package:flutter_admin_dashboard/Global/Widgets/cards/white_card.dart';
 import 'package:flutter_admin_dashboard/Global/Widgets/labels/TextWidget.dart';
 import 'package:flutter_admin_dashboard/providers/side_menu_provider.dart';
 import 'package:flutter_admin_dashboard/services/navigation_service.dart';
 import 'package:flutter_admin_dashboard/ui/Pages/Dashboard/Telephonist_NewBid.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter_admin_dashboard/models/Product_Model.dart';
@@ -41,6 +44,7 @@ class _DashboardViewState extends State<AllProductsView> {
     productprovider ??= context.read<Productprovider>();
 
     bidderProvider ??= context.read<BidderProvider>();
+    Get.put(BiddingHandler()).startListening();
     doThis();
   }
 

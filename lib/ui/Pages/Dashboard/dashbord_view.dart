@@ -4,12 +4,15 @@ import 'package:flutter_admin_dashboard/Global/Widgets/SnackBar/SnackBar.dart';
 import 'package:flutter_admin_dashboard/Global/Widgets/cards/white_card.dart';
 import 'package:flutter_admin_dashboard/Global/Widgets/labels/TextWidget.dart';
 import 'package:flutter_admin_dashboard/models/Donation_Model.dart';
+import 'package:flutter_admin_dashboard/providers/BiddersProvider.dart';
+import 'package:flutter_admin_dashboard/providers/BiddingsHandler.dart';
 import 'package:flutter_admin_dashboard/providers/Controllers.dart';
 import 'package:flutter_admin_dashboard/providers/side_menu_provider.dart';
 import 'package:flutter_admin_dashboard/services/navigation_service.dart';
 import 'package:flutter_admin_dashboard/ui/Pages/Dashboard/AddDonation_POP.dart';
 import 'package:flutter_admin_dashboard/ui/Pages/Dashboard/Presenter_Screen.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../api/ApiHandler.dart';
 import '../../../providers/productsProvider.dart';
@@ -37,6 +40,8 @@ class _DashboardViewState extends State<DashboardView> {
     productprovider ??= context.read<Productprovider>();
     productprovider!.getProducts();
     productprovider!.getDetailForAdmin();
+    Get.put(BiddingHandler()).startListening();
+    productprovider!.getDonationapiCall();
   }
 
   @override
@@ -46,6 +51,7 @@ class _DashboardViewState extends State<DashboardView> {
       child: Column(
         children: [
           topbox(size),
+          donations(size),
           products(),
         ],
       ),
@@ -94,10 +100,9 @@ class _DashboardViewState extends State<DashboardView> {
                           children: [
                             FittedBox(
                               child: Text(
-                                "owie",
-                                // (donationAmount != null || salesAmount != null)
-                                //     ? '£: ${(donationAmount ?? 0) + (salesAmount ?? 0)}'
-                                //     : '£: 0',
+                                // "owie",
+
+                                '£: ${(donationAmount ?? 0) + (salesAmount ?? 0)}',
                                 style: Theme.of(context)
                                     .textTheme
                                     .headlineMedium
@@ -620,6 +625,63 @@ class _DashboardViewState extends State<DashboardView> {
     );
   }
 
+  Widget donations(var size) {
+    return Consumer<Productprovider>(
+        builder: (context, value, child) => value.isGettingDonations
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : value.donation.isEmpty
+                ? const Center(
+                    child: Text('no products found!'),
+                  )
+                : SizedBox(
+                    //color: Colors.amber,
+                    height: 80,
+                    width: size.width * 0.8,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      itemCount: value.donation.length,
+                      controller: ScrollController(
+                        initialScrollOffset: 0,
+                        keepScrollOffset: true,
+                      ),
+                      itemBuilder: (BuildContext context, int index) {
+                        final donations = productprovider!.donations[index];
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            color: Colors.blue,
+                            height: 50,
+                            width: 200,
+                            child: ListTile(
+                              leading: Text("${donations.id}"),
+                              title: Text(donations.donorName),
+                              subtitle: Text(donations.description),
+                              trailing: Switch(
+                                activeColor: btnColor,
+                                value: donations
+                                    .isAnounced!, // Replace with your actual switch value
+                                onChanged: (bool value) {
+                                  // Handle the switch state change here
+                                  setState(() {
+                                    donations.isAnounced =
+                                        !donations.isAnounced!;
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ));
+  }
+
   Widget products() {
     final size = MediaQuery.of(context).size;
     return Column(
@@ -656,11 +718,11 @@ class _DashboardViewState extends State<DashboardView> {
                           (index) {
                             final product =
                                 productprovider!.filteredProducts[index];
-                            return (product.productType == "Auction" ||
+                            return ((product.productType == "Auction" ||
                                         product.productType == "Quick" ||
-                                        product.productType == "Sold" ||
-                                        product.isVisible) &&
-                                    loggedinuser!.userType == "pres"
+                                        product.productType == "Sold") &&
+                                    product.isVisible &&
+                                    loggedinuser!.userType == "pres")
                                 ? GestureDetector(
                                     onTap: () {
                                       Navigator.push(

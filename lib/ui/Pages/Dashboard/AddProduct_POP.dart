@@ -173,8 +173,17 @@ class _AddProduct_POPState extends State<AddProduct_POP> {
                 hintText: "Product Detail...",
               ),
             ),
-            SizedBox(
+            Container(
               height: 200,
+              width: MediaQuery.of(context).size.width > 500
+                  ? MediaQuery.of(context).size.width * 0.35
+                  : MediaQuery.of(context).size.width * 0.9,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                border: Border.all(
+                  color: btnColor,
+                ),
+              ),
               child: ListView.builder(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
@@ -186,7 +195,11 @@ class _AddProduct_POPState extends State<AddProduct_POP> {
                       return const Icon(Icons.error);
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
+                      return const SizedBox(
+                        height: 30,
+                        width: 30,
+                        child: CircularProgressIndicator(),
+                      );
                     } else {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -205,16 +218,19 @@ class _AddProduct_POPState extends State<AddProduct_POP> {
                 ),
               ),
             ),
-            SizedBox(
-              width: double.infinity,
-              height: 40,
-              child: ButtonWidget(
-                btnText: "Pick Image",
-                onPress: () async {
-                  await pickImage(
-                      source: ImageSource.gallery,
-                      productprovier: productprovider);
-                },
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: double.infinity,
+                height: 40,
+                child: ButtonWidget(
+                  btnText: "Pick Image",
+                  onPress: () async {
+                    await pickImage(
+                        source: ImageSource.gallery,
+                        productprovier: productprovider);
+                  },
+                ),
               ),
             ),
             const SizedBox(

@@ -17,6 +17,7 @@ double? donationAmount, salesAmount = 0;
 class Productprovider extends ChangeNotifier {
   List<Product> products = [];
   List<Donation> donation = [];
+  List<Donation> donations = [];
   bool isGettingProducts = true;
   bool isGettingDonations = true;
   Details? details;
@@ -56,6 +57,25 @@ class Productprovider extends ChangeNotifier {
     }
     isGettingProducts = false;
     notifyListeners();
+  }
+
+  getDonationapiCall() async {
+    try {
+      isGettingDonations = true;
+      var response = await Dio().get(getDonationsip);
+      if (response.statusCode == 200) {
+        donations.clear();
+        //var data = jsonDecode(response.data);
+        for (var element in response.data) {
+          //print(jsonDecode(element));
+          donations.add(Donation.fromMap(element));
+
+          //print(bidders);
+        }
+        donations.sort(((a, b) => b.date!.compareTo(a.date!)));
+        isGettingDonations = false;
+      }
+    } catch (e) {}
   }
 
   addProduct(Product product, List<XFile> images) async {
