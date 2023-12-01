@@ -16,8 +16,7 @@ double? donationAmount, salesAmount = 0;
 
 class Productprovider extends ChangeNotifier {
   List<Product> products = [];
-  List<Donation> donation = [];
-  List<Donation> donations = [];
+  List<donate> donation = [];
   bool isGettingProducts = true;
   bool isGettingDonations = true;
   Details? details;
@@ -61,21 +60,19 @@ class Productprovider extends ChangeNotifier {
 
   getDonationapiCall() async {
     try {
-      isGettingDonations = true;
       var response = await Dio().get(getDonationsip);
       if (response.statusCode == 200) {
-        donations.clear();
-        //var data = jsonDecode(response.data);
+        print(response);
+        donation.clear();
         for (var element in response.data) {
-          //print(jsonDecode(element));
-          donations.add(Donation.fromMap(element));
-
-          //print(bidders);
+          donation.add(donate.fromMap(element));
         }
-        donations.sort(((a, b) => b.date!.compareTo(a.date!)));
+        donation.sort((a, b) => b.date!.compareTo(a.date!));
         isGettingDonations = false;
       }
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
   }
 
   addProduct(Product product, List<XFile> images) async {
@@ -122,7 +119,7 @@ class Productprovider extends ChangeNotifier {
     }
   }
 
-  addDonation(Donation donation) async {
+  addDonation(donate donation) async {
     try {
       FormData formData = FormData.fromMap(donation.toMap());
       var response =
@@ -130,6 +127,7 @@ class Productprovider extends ChangeNotifier {
       if (response.statusCode == 200) {
         print(response.data);
         await getDetailForAdmin();
+        await getDonationapiCall();
         notifyListeners();
       }
     } catch (e) {
@@ -137,41 +135,20 @@ class Productprovider extends ChangeNotifier {
     }
   }
 
-  // getDonationAmount() async {
-  //   try {
-  //     // getDetailForAdmin();
-  //     isGettingDonations = true;
-  //     notifyListeners();
-  //     var response = await Dio().get(getDonationAmountIp);
-  //     print(response);
-  //     if (response.statusCode == 200) {
-  //       products.clear();
-  //       var data = jsonDecode(response.data);
-  //       for (var element in data) {
-  //         Product p = Product.fromMap(element);
-  //         try {
-  //           // var images = await FirebaseFirestore.instance
-  //           //     .collection('ProductsImages')
-  //           //     .where('Pid', isEqualTo: p.id)
-  //           //     .get();
-  //           // for (var element in images.docs) {
-  //           //   p.images.add(element['url']);
-  //           // }
-  //         } catch (e) {
-  //           SnackBar(content: Text(e.toString()));
-  //         }
-  //         products.add(p);
-  //       }
-  //       filteredProducts = products;
-  //       g.Get.find<BiddingHandler>().products = products;
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //     SnackBar(content: Text(e.toString()));
-  //   }
-  //   isGettingProducts = false;
-  //   notifyListeners();
-  // }
+  updatedonationType({required String isAnounced, required String did}) async {
+    try {
+      var response = await Dio().post(changeDoantionTypeIp,
+          options: option,
+          data: FormData.fromMap({'did': did, 'isAnounced': isAnounced}));
+      if (response.statusCode == 200) {
+        int index = donation.indexWhere((element) => element.id == did);
+        donation[index].isAnounced = isAnounced;
+        notifyListeners();
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   applyFilter({required String toFilter}) async {
     try {
@@ -199,7 +176,7 @@ class Productprovider extends ChangeNotifier {
     } catch (e) {}
   }
 
-  updateProduct({required Product p}) async {
+  updateProduct(Product p) async {
     try {
       var response =
           await Dio().post(updateProductApi, options: option, data: p.toJson());
@@ -209,7 +186,9 @@ class Productprovider extends ChangeNotifier {
         products.insert(index, p);
         notifyListeners();
       }
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
   }
 
   updateType({required String type, required int pid}) async {
@@ -227,7 +206,7 @@ class Productprovider extends ChangeNotifier {
     }
   }
 
-  updateVisibility({required bool isVisible, required int pid}) async {
+  updateVisibility({required String isVisible, required int pid}) async {
     try {
       var response = await Dio().post(updateVisibleApi,
           options: option,

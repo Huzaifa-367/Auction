@@ -1,93 +1,105 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
-class Donation {
-  String donorName;
-  String retailvalue;
-  String description;
+class donate {
+  String? id;
+  String? retailvalue;
+  String? donorName;
+  String? description;
   String? date;
-  bool? isAnounced;
-  int id;
-  Donation(
-      {required this.donorName,
-      required this.retailvalue,
-      required this.description,
-      this.date,
-      required this.id,
-      this.isAnounced});
+  String? isAnounced;
 
-  Donation copyWith({
-    String? donorName,
+  donate(
+    this.id,
+    this.retailvalue,
+    this.donorName,
+    this.description,
+    this.date,
+    this.isAnounced,
+  );
+
+  donate copyWith({
+    String? id,
     String? retailvalue,
+    String? donorName,
     String? description,
     String? date,
-    int? id,
-    bool? isAnounced,
+    String? isAnounced,
   }) {
-    return Donation(
-      donorName: donorName ?? this.donorName,
-      retailvalue: retailvalue ?? this.retailvalue,
-      description: description ?? this.description,
-      date: date ?? this.date,
-      id: id ?? this.id,
+    return donate(
+      id ?? this.id,
+      retailvalue ?? this.retailvalue,
+      donorName ?? this.donorName,
+      description ?? this.description,
+      date ?? this.date,
+      isAnounced ?? this.isAnounced,
     );
   }
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    result.addAll({'donorName': donorName});
-    result.addAll({'retailvalue': retailvalue});
-    result.addAll({'description': description});
+    if (id != null) {
+      result.addAll({'id': id});
+    }
+    if (retailvalue != null) {
+      result.addAll({'retailvalue': retailvalue});
+    }
+    if (donorName != null) {
+      result.addAll({'donorName': donorName});
+    }
+    if (description != null) {
+      result.addAll({'description': description});
+    }
     if (date != null) {
       result.addAll({'date': date});
     }
-    result.addAll({'id': id});
+    if (isAnounced != null) {
+      result.addAll({'isAnounced': isAnounced});
+    }
 
     return result;
   }
 
-  factory Donation.fromMap(Map<String, dynamic> map) {
-    return Donation(
-      donorName: map['donorName'] ?? '',
-      retailvalue: map['retailvalue'] ?? '',
-      description: map['description'] ?? '',
-      date: map['date'],
-      id: map['id']?.toInt() ?? 0,
+  factory donate.fromMap(Map<String, dynamic> map) {
+    return donate(
+      map['id'],
+      map['retailvalue'],
+      map['donorName'],
+      map['description'],
+      map['date'],
+      map['isAnounced'],
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Donation.fromJson(String source) =>
-      Donation.fromMap(json.decode(source));
+  factory donate.fromJson(String source) => donate.fromMap(json.decode(source));
 
   @override
   String toString() {
-    return 'Donation(donorName: $donorName, retailvalue: $retailvalue, description: $description, date: $date, id: $id)';
+    return 'donate(id: $id, retailvalue: $retailvalue, donorName: $donorName, description: $description, date: $date, isAnounced: $isAnounced)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Donation &&
-        other.donorName == donorName &&
+    return other is donate &&
+        other.id == id &&
         other.retailvalue == retailvalue &&
+        other.donorName == donorName &&
         other.description == description &&
         other.date == date &&
-        other.id == id;
+        other.isAnounced == isAnounced;
   }
 
   @override
   int get hashCode {
-    return donorName.hashCode ^
+    return id.hashCode ^
         retailvalue.hashCode ^
+        donorName.hashCode ^
         description.hashCode ^
         date.hashCode ^
-        id.hashCode;
+        isAnounced.hashCode;
   }
 }

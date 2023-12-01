@@ -52,7 +52,7 @@ class _DashboardViewState extends State<DashboardView> {
         children: [
           topbox(size),
           donations(size),
-          products(),
+          products(size),
         ],
       ),
     );
@@ -224,18 +224,20 @@ class _DashboardViewState extends State<DashboardView> {
                                                   ),
                                                   TextButton(
                                                     onPressed: () async {
-                                                      Donation d = Donation(
-                                                          description: Controllers
-                                                              .descriptionController
-                                                              .text,
-                                                          donorName: Controllers
-                                                              .donor_name_controller
-                                                              .text,
-                                                          id: 0,
-                                                          retailvalue:
-                                                              Controllers
-                                                                  .retailPrice
-                                                                  .text);
+                                                      donate d = donate(
+                                                        "0",
+                                                        Controllers
+                                                            .retailPrice.text,
+                                                        Controllers
+                                                            .donor_name_controller
+                                                            .text,
+                                                        Controllers
+                                                            .descriptionController
+                                                            .text,
+                                                        DateTime.now()
+                                                            .toString(),
+                                                        "false",
+                                                      );
                                                       await productprovider!
                                                           .addDonation(
                                                         d,
@@ -626,78 +628,85 @@ class _DashboardViewState extends State<DashboardView> {
   }
 
   Widget donations(var size) {
-    return Consumer<Productprovider>(
-        builder: (context, value, child) => value.isGettingDonations
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : value.donation.isEmpty
-                ? const Center(
-                    child: Text('no products found!'),
-                  )
-                : SizedBox(
-                    //color: Colors.amber,
-                    height: 80,
-                    width: size.width * 0.8,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      itemCount: value.donation.length,
-                      controller: ScrollController(
-                        initialScrollOffset: 0,
-                        keepScrollOffset: true,
-                      ),
-                      itemBuilder: (BuildContext context, int index) {
-                        final donations = productprovider!.donations[index];
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            color: Colors.blue,
-                            height: 50,
-                            width: 200,
-                            child: ListTile(
-                              leading: Text("${donations.id}"),
-                              title: Text(donations.donorName),
-                              subtitle: Text(donations.description),
-                              trailing: Switch(
-                                activeColor: btnColor,
-                                value: donations
-                                    .isAnounced!, // Replace with your actual switch value
-                                onChanged: (bool value) {
-                                  // Handle the switch state change here
-                                  setState(() {
-                                    donations.isAnounced =
-                                        !donations.isAnounced!;
-                                  });
-                                },
+    return WhiteCard(
+      title: "Donations",
+      width: size.width * 0.9,
+      child: Consumer<Productprovider>(
+          builder: (context, value, child) => value.isGettingDonations
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : value.donation.isEmpty
+                  ? const Center(
+                      child: Text('no Donations found!'),
+                    )
+                  : SizedBox(
+                      //color: Colors.amber,
+                      height: 160,
+                      width: size.width * 0.8,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        itemCount: value.donation.length,
+                        controller: ScrollController(
+                          initialScrollOffset: 0,
+                          keepScrollOffset: true,
+                        ),
+                        itemBuilder: (BuildContext context, int index) {
+                          final donations = productprovider!.donation[index];
+                          return GestureDetector(
+                            onTap: () {
+                              String value;
+                              if (donations.isAnounced == "true") {
+                                value = "false";
+                                productprovider!.updatedonationType(
+                                    isAnounced: value, did: donations.id!);
+                              } else {
+                                value = "true";
+                                productprovider!.updatedonationType(
+                                    isAnounced: value, did: donations.id!);
+                              }
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Material(
+                                elevation: 10,
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(20),
+                                ),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: donations.isAnounced == "true"
+                                        ? tbtnColor
+                                        : greenColor,
+                                  ),
+                                  height: 150,
+                                  width: 650,
+                                  child: ListTile(
+                                    leading: Text("${donations.id}"),
+                                    title: Text(donations.donorName!),
+                                    subtitle: Text(donations.description!),
+                                    trailing: CircleAvatar(
+                                      radius: 60,
+                                      child:
+                                          Text("£: ${donations.retailvalue!}"),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    ),
-                  ));
+                          );
+                        },
+                      ),
+                    )),
+    );
   }
 
-  Widget products() {
-    final size = MediaQuery.of(context).size;
+  Widget products(var size) {
     return Column(
       children: [
         const SizedBox(height: 15),
-        // Container(
-        //   padding: const EdgeInsets.symmetric(horizontal: 25),
-        //   alignment: Alignment.centerLeft,
-        //   child: const Text(
-        //     "Products",
-        //     style: TextStyle(
-        //       fontSize: 24,
-        //       fontWeight: FontWeight.bold,
-        //     ),
-        //   ),
-        // ),
         Consumer<Productprovider>(
           builder: (context, value, child) => value.isGettingProducts
               ? const Center(
@@ -721,7 +730,7 @@ class _DashboardViewState extends State<DashboardView> {
                             return ((product.productType == "Auction" ||
                                         product.productType == "Quick" ||
                                         product.productType == "Sold") &&
-                                    product.isVisible &&
+                                    product.isVisible == "1" &&
                                     loggedinuser!.userType == "pres")
                                 ? GestureDetector(
                                     onTap: () {
@@ -1139,7 +1148,8 @@ class _DashboardViewState extends State<DashboardView> {
                                       ),
                                     ),
                                   )
-                                : loggedinuser!.userType == "admin"
+                                : (loggedinuser!.userType == "admin" &&
+                                        product.productType == "gen")
                                     ? GestureDetector(
                                         onTap: () {
                                           Navigator.push(

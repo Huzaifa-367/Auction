@@ -19,7 +19,7 @@ class Product {
   String? auctioneddatetime;
 
   bool isQuickSale;
-  bool isVisible;
+  String isVisible;
   int id;
   Product({
     required this.name,
@@ -53,7 +53,7 @@ class Product {
     String? type,
     String? qty,
     bool? isQuickSale,
-    bool? isVisible,
+    String? isVisible,
     int? id,
   }) {
     return Product(

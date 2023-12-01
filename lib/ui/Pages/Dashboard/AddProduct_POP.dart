@@ -115,10 +115,11 @@ class _AddProduct_POPState extends State<AddProduct_POP> {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.6,
               child: MyTextField(
-                  maxlines: 1,
-                  obscureText: false,
-                  controller: Controllers.donor_name_controller,
-                  hintText: "M.Huzaifa"),
+                maxlines: 1,
+                obscureText: false,
+                controller: Controllers.donor_name_controller,
+                hintText: "M.Huzaifa",
+              ),
             ),
             const SizedBox(
               height: 10,
@@ -134,6 +135,7 @@ class _AddProduct_POPState extends State<AddProduct_POP> {
                   maxlines: 1,
                   obscureText: false,
                   controller: Controllers.lotnumber,
+                  validateInput: _validateInput,
                   hintText: "65A4F7"),
             ),
             const SizedBox(

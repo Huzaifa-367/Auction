@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_admin_dashboard/ui/Pages/Dashboard/Setting_view.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 String ip = 'https://php.cozyreach.com/';
@@ -13,7 +14,7 @@ String addProductIp = '${ip}AddproductApi.php';
 String addDonationIp = '${ip}addDonationApi.php';
 String getDonationAmountIp = '${ip}GetDonationAmountApi.php';
 String getDonationsip = '${ip}getDonationsApi.php';
-
+String changeDoantionTypeIp = '${ip}changedoantionType.php';
 String addProductImageIp = '${ip}addProductImage.php';
 String getProduct = '${ip}getapi.php';
 String getProductByTypeIp = '${ip}GetProductByType.php';

@@ -170,7 +170,7 @@ class _DashboardViewState extends State<AllProductsView> {
                                             id: 0,
                                             lotNo: Controllers.lotnumber.text,
                                             name: Controllers.p_name.text,
-                                            isVisible: false,
+                                            isVisible: "1",
                                             image_urls: [],
                                             isQuickSale: false,
                                             logo: '',
@@ -856,6 +856,42 @@ Widget products(context, productprovider, bidderProvider) {
                                                               ? IconButton(
                                                                   onPressed:
                                                                       () {
+                                                                    Controllers
+                                                                            .qty
+                                                                            .text =
+                                                                        product
+                                                                            .qty;
+                                                                    Controllers
+                                                                            .descriptionController
+                                                                            .text =
+                                                                        product
+                                                                            .description;
+                                                                    Controllers
+                                                                            .donor_name_controller
+                                                                            .text =
+                                                                        product
+                                                                            .donorName;
+                                                                    Controllers
+                                                                            .lotnumber
+                                                                            .text =
+                                                                        product
+                                                                            .lotNo;
+                                                                    Controllers
+                                                                            .retailPrice
+                                                                            .text =
+                                                                        product
+                                                                            .retailvalue;
+                                                                    Controllers
+                                                                            .timmer
+                                                                            .text =
+                                                                        product
+                                                                            .auctionTime
+                                                                            .toString();
+                                                                    Controllers
+                                                                            .p_name
+                                                                            .text =
+                                                                        product
+                                                                            .name;
                                                                     //
                                                                     showDialog(
                                                                       //useSafeArea: true,
@@ -907,10 +943,31 @@ Widget products(context, productprovider, bidderProvider) {
                                                                           TextButton(
                                                                             onPressed:
                                                                                 () async {
-                                                                              Product p = Product(qty: Controllers.qty.text, auctionTime: int.parse(Controllers.timmer.text), type: "gen", productType: 'gen', description: Controllers.descriptionController.text, donorName: Controllers.donor_name_controller.text, id: 0, lotNo: Controllers.lotnumber.text, name: Controllers.p_name.text, isVisible: false, image_urls: [], isQuickSale: false, logo: '', retailvalue: Controllers.retailPrice.text);
-                                                                              await productprovider!.addProduct(p, productprovider!.pickedFiles);
-                                                                              //snackBar(context, "Saved Successfully");
-                                                                              Navigator.of(context).pop();
+                                                                              try {
+                                                                                Product p = Product(
+                                                                                  qty: Controllers.qty.text,
+                                                                                  auctionTime: int.parse(Controllers.timmer.text),
+                                                                                  type: product.productType,
+                                                                                  productType: product.productType,
+                                                                                  description: Controllers.descriptionController.text,
+                                                                                  donorName: Controllers.donor_name_controller.text,
+                                                                                  id: product.id,
+                                                                                  lotNo: Controllers.lotnumber.text,
+                                                                                  name: Controllers.p_name.text,
+                                                                                  isVisible: product.isVisible,
+                                                                                  image_urls: [],
+                                                                                  isQuickSale: false,
+                                                                                  logo: '',
+                                                                                  retailvalue: Controllers.retailPrice.text,
+                                                                                );
+                                                                                await productprovider!.updateProduct(
+                                                                                  p,
+                                                                                );
+                                                                                //snackBar(context, "Saved Successfully");
+                                                                                Navigator.of(context).pop();
+                                                                              } catch (e) {
+                                                                                print(e);
+                                                                              }
                                                                             },
                                                                             child:
                                                                                 Container(
