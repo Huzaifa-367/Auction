@@ -632,13 +632,15 @@ class _DashboardViewState extends State<DashboardView> {
       title: "Donations",
       width: size.width * 0.9,
       child: Consumer<Productprovider>(
-          builder: (context, value, child) => value.isGettingDonations
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : value.donation.isEmpty
+          builder: (context, value, child) =>
+              // value.isGettingDonations
+              //     ? const Center(
+              //         child: CircularProgressIndicator(),
+              //       )
+              //     :
+              value.donation.isEmpty
                   ? const Center(
-                      child: Text('no Donations found!'),
+                      child: Text('No Donations found!'),
                     )
                   : SizedBox(
                       //color: Colors.amber,

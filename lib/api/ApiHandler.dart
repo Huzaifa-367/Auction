@@ -7,6 +7,7 @@ String productImageIp = '${ip}uploads/';
 String userLoginAPi = '${ip}UserLogin.php';
 String signUpAPi = '${ip}create_api.php';
 String updateProductApi = '${ip}UpdateProductApi.php';
+String deleteProductApi = '${ip}deleteProductApi.php';
 String updateVisibleApi = '${ip}UpdateVisibleApi.php';
 String getAdminDetail = '${ip}getDetailForAdminApi.php';
 Options option = Options(headers: {'Content-Type': 'application/json'});

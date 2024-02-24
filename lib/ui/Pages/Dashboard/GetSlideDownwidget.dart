@@ -65,38 +65,38 @@ class _SlideCountDownWidgetState extends State<SlideCountDownWidget> {
     final addSeconds = countDown ? -1 : 1;
     setState(() {
       final seconds = bidderProvider.duration!.inSeconds + addSeconds;
-      if (seconds <= 0) {
-        timer?.cancel();
-        if (seconds == 1 && loggedinuser!.userType == "admin") {
-          try {
-            //String status = 'UnSold';
-            if (bidderProvider.bidders.isNotEmpty) {
-              saleToBidder(
-                  bidderId: bidderProvider.bidders[0].id,
-                  productId: widget.product.id);
-              if (bidderProvider.timer != null) {
-                bidderProvider.timer!.cancel();
-              }
-              productprovider.updateType(
-                type: 'Sold',
-                pid: widget.product.id,
-              );
-              snackBar(context,
-                  'Sold to ${bidderProvider.bidders[0].user_Name}', null);
-            } else {
-              productprovider.updateType(
-                type: 'UnSold',
-                pid: widget.product.id,
-              );
-              snackBar(context, 'Item set to UnSold.', null);
-            }
-          } catch (e) {
-            //String error = e.toString();
-          }
-        }
-      } else {
-        bidderProvider.duration = Duration(seconds: seconds);
-      }
+      // if (seconds <= 0) {
+      //   timer?.cancel();
+      //   if (seconds == 1) {
+      //     try {
+      //       //String status = 'UnSold';
+      //       if (bidderProvider.bidders.isNotEmpty) {
+      //         saleToBidder(
+      //             bidderId: bidderProvider.bidders[0].id,
+      //             productId: widget.product.id);
+      //         if (bidderProvider.timer != null) {
+      //           bidderProvider.timer!.cancel();
+      //         }
+      //         productprovider.updateType(
+      //           type: 'Sold',
+      //           pid: widget.product.id,
+      //         );
+      //         snackBar(context,
+      //             'Sold to ${bidderProvider.bidders[0].user_Name}', null);
+      //       } else {
+      //         productprovider.updateType(
+      //           type: 'UnSold',
+      //           pid: widget.product.id,
+      //         );
+      //         snackBar(context, 'Item set to UnSold.', null);
+      //       }
+      //     } catch (e) {
+      //       //String error = e.toString();
+      //     }
+      //   }
+      // } else {
+      bidderProvider.duration = Duration(seconds: seconds);
+      // }
     });
   }
 
@@ -253,7 +253,7 @@ class _SlideCountDownWidgetState extends State<SlideCountDownWidget> {
   Widget buildButtons() {
     final isRunning = timer == null ? false : timer!.isActive;
     final isCompleted = duration.inSeconds == 0;
-    return !isRunning || isCompleted
+    return !isRunning
         ? TextButton(
             onPressed: () {
               bidderProvider.duration =
@@ -284,6 +284,34 @@ class _SlideCountDownWidgetState extends State<SlideCountDownWidget> {
                 onPressed: () {
                   setState(() {
                     if (isRunning) {
+                      try {
+                        //String status = 'UnSold';
+                        if (bidderProvider.bidders.isNotEmpty) {
+                          saleToBidder(
+                              bidderId: bidderProvider.bidders[0].id,
+                              productId: widget.product.id);
+                          if (bidderProvider.timer != null) {
+                            bidderProvider.timer!.cancel();
+                          }
+                          productprovider.updateType(
+                            type: 'Sold',
+                            pid: widget.product.id,
+                          );
+                          snackBar(
+                              context,
+                              'Sold to ${bidderProvider.bidders[0].user_Name}',
+                              null);
+                        } else {
+                          productprovider.updateType(
+                            type: 'UnSold',
+                            pid: widget.product.id,
+                          );
+                          snackBar(context, 'Item set to UnSold.', null);
+                        }
+                      } catch (e) {
+                        String error = e.toString();
+                        print(error);
+                      }
                       stopTimer(resets: false);
                     }
                   });
@@ -292,17 +320,17 @@ class _SlideCountDownWidgetState extends State<SlideCountDownWidget> {
                 },
                 child: const Text("Stop"),
               ),
-              const SizedBox(
-                width: 12,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    stopTimer();
-                  });
-                },
-                child: const Text("Cancel"),
-              ),
+              // const SizedBox(
+              //   width: 12,
+              // ),
+              // ElevatedButton(
+              //   onPressed: () {
+              //     setState(() {
+              //       stopTimer();
+              //     });
+              //   },
+              //   child: const Text("Cancel"),
+              // ),
             ],
           );
   }

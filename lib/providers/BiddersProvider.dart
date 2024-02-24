@@ -32,7 +32,7 @@ class BidderProvider extends ChangeNotifier {
   getAuction() async {
     try {
       await getAuctionDetail();
-      auctionTimer = Timer.periodic(const Duration(seconds: 10), (timer) {
+      auctionTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
         try {
           getAuctionDetail();
         } catch (w) {}
@@ -109,18 +109,22 @@ class BidderProvider extends ChangeNotifier {
       var response = await Dio().get(getBiddersIp + pid.toString());
       if (response.statusCode == 200) {
         bidders.clear();
-        //var data = jsonDecode(response.data);
-        for (var element in response.data) {
-          //print(jsonDecode(element));
-          print(element as Map<String, dynamic>);
-          print((element)['product_id']);
-          bidders.add(Bidder.fromMap(element));
+        var responseData =
+            response.data; // Assuming responseData is an Iterable<dynamic>
 
-          //print(bidders);
+        if (responseData is Iterable) {
+          for (var element in responseData) {
+            // Ensure that each element is a Map<String, dynamic>
+            if (element is Map<String, dynamic>) {
+              bidders.add(Bidder.fromMap(element));
+            }
+          }
+          bidders.sort((a, b) => b.amount.compareTo(a.amount));
         }
-        bidders.sort(((a, b) => b.amount.compareTo(a.amount)));
       }
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
   }
 
   getHeighestBidderapiCall(int pid) async {

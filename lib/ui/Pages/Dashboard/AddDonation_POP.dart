@@ -15,6 +15,7 @@ class AddDonation_POP extends StatefulWidget {
 
 class _AddDonation_POPState extends State<AddDonation_POP> {
   String _errorText = '';
+  String _errorText2 = '';
 
   void _validateInput(String value) {
     final RegExp integerRegex = RegExp(r'^[0-9]+$');
@@ -27,6 +28,22 @@ class _AddDonation_POPState extends State<AddDonation_POP> {
           _errorText = 'Please enter a valid integer.';
         } else {
           _errorText = '';
+        }
+      }
+    });
+  }
+
+  void _validatestringInput(String value) {
+    final RegExp singleQuoteRegex = RegExp(r"'");
+
+    setState(() {
+      if (value.isEmpty) {
+        _errorText2 = '';
+      } else {
+        if (singleQuoteRegex.hasMatch(value)) {
+          _errorText2 = "String shouldn't contain a single quote(').";
+        } else {
+          _errorText2 = '';
         }
       }
     });
@@ -76,7 +93,7 @@ class _AddDonation_POPState extends State<AddDonation_POP> {
                 obscureText: false,
                 keytype: TextInputType.number,
                 controller: Controllers.retailPrice,
-                hintText: "6547",
+                hintText: "200",
                 validateInput: _validateInput,
                 errorText: _errorText,
               ),
@@ -97,6 +114,8 @@ class _AddDonation_POPState extends State<AddDonation_POP> {
                 obscureText: false,
                 controller: Controllers.descriptionController,
                 hintText: "Product Detail...",
+                validateInput: _validatestringInput,
+                errorText: _errorText2,
               ),
             ),
             const SizedBox(

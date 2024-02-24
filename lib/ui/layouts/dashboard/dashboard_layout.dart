@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_dashboard/providers/BiddersProvider.dart';
 import 'package:flutter_admin_dashboard/providers/BiddingsHandler.dart';
+import 'package:flutter_admin_dashboard/providers/productsProvider.dart';
 import 'package:flutter_admin_dashboard/providers/side_menu_provider.dart';
 import 'package:flutter_admin_dashboard/ui/shared/navbar.dart';
 import 'package:flutter_admin_dashboard/ui/shared/sidebar.dart';
@@ -33,9 +34,29 @@ class _DashboardLayoutState extends State<DashboardLayout>
     }
     // Get.put(BiddingHandler()).startListening();
     SideMenuProvider.menuController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 300));
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+
+//////
+    //bidderProvider ??= context.read<BidderProvider>();
+
+    //bidderProvider!.getAuction();
+    //bidderProvider!.getBidders(widget.product.id);
   }
 
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   try {
+  //     bidderProvider!.auctionTimer!.cancel();
+  //     bidderProvider!.timer!.cancel();
+  //   } catch (e) {}
+  //   super.dispose();
+  // }
+
+  late Productprovider productprovider;
+  BidderProvider? bidderProvider;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;

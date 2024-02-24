@@ -212,21 +212,6 @@ class _PresenterViewState extends State<PresenterView> {
                                       backgroundZoomEnabled: true,
                                     ),
                                   ),
-                                  // FanCarouselImageSlider(
-                                  //   initalPageIndex: 0,
-                                  //   autoPlay: true,
-                                  //   autoPlayInterval: const Duration(
-                                  //     seconds: 5,
-                                  //   ),
-                                  //   isClickable: false,
-                                  //   sliderHeight:
-                                  //       MediaQuery.of(context).size.height *
-                                  //           0.7,
-                                  //   imagesLink: widget.product.image_urls,
-                                  //   userCanDrag: true,
-                                  //   isAssets: false,
-                                  //   imageFitMode: BoxFit.fill,
-                                  // ),
                                 ],
                               ),
                             ),

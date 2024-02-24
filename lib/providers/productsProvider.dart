@@ -69,6 +69,7 @@ class Productprovider extends ChangeNotifier {
         }
         donation.sort((a, b) => b.date!.compareTo(a.date!));
         isGettingDonations = false;
+        notifyListeners();
       }
     } catch (e) {
       print(e);
@@ -168,22 +169,38 @@ class Productprovider extends ChangeNotifier {
     } catch (e) {}
   }
 
-  deleteProduct({required String id}) async {
+  deleteProduct(int id) async {
     try {
-      await FirebaseFirestore.instance.collection('Products').doc(id).delete();
-      products.removeWhere((element) => element.id == id);
-      notifyListeners();
-    } catch (e) {}
+      var response = await Dio().delete(
+        deleteProductApi,
+        options: option,
+        queryParameters: {'id': id},
+      );
+      print("Delete Product Api response======> $response");
+      if (response.statusCode == 200) {
+        notifyListeners();
+        print('Product deleted successfully');
+        // Handle success, e.g., show a message or update the UI
+      } else {
+        print('Failed to delete product: ${response.statusCode}');
+        // Handle failure, e.g., show an error message
+      }
+    } catch (error) {
+      print('Error deleting product: $error');
+      // Handle error, e.g., show an error message
+    }
   }
 
   updateProduct(Product p) async {
     try {
       var response =
-          await Dio().post(updateProductApi, options: option, data: p.toJson());
+          await Dio().post(updateProductApi, options: option, data: p.toMap());
       if (response.statusCode == 200) {
-        int index = products.indexWhere((element) => element.id == p.id);
-        products.removeAt(index);
-        products.insert(index, p);
+        // int index = products.indexWhere((element) => element.id == p.id);
+        // products.removeAt(index);
+        // products.insert(index, p);
+        EasyLoading.showToast('Updated');
+        await getProducts();
         notifyListeners();
       }
     } catch (e) {

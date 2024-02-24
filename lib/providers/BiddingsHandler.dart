@@ -14,7 +14,7 @@ class BiddingHandler extends GetxController {
   startListening() {
     try {
       _getTheLatestBid();
-      Timer.periodic(const Duration(seconds: 5), (timer) {
+      Timer.periodic(const Duration(seconds: 2), (timer) {
         _getTheLatestBid();
       });
     } catch (e) {}
